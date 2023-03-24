@@ -1,0 +1,53 @@
+CREATE DATABASE SchoolDB
+GO
+USE [SchoolDB]
+
+CREATE TABLE Roles (
+    Id VARCHAR(36) PRIMARY KEY DEFAULT NEWID(),
+    [Name] VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Courses (
+    Id VARCHAR(36) PRIMARY KEY DEFAULT NEWID(),
+    [Name] VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Users (
+    Id VARCHAR(36) PRIMARY KEY DEFAULT NEWID(),
+    FirstName VARCHAR(255) NOT NULL,
+    MiddleName VARCHAR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    Age TINYINT NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    [Password] CHAR(64) NOT NULL,
+    Phone VARCHAR(20) NULL,
+    [Address] VARCHAR(255) NULL,
+    DateOfCreation DATETIME2 DEFAULT GETDATE() NOT NULL,
+    RoleId VARCHAR(36) NOT NULL,
+    FOREIGN KEY (RoleId) REFERENCES Roles(Id)
+);
+
+CREATE TABLE UsersCourses (
+    CourseId VARCHAR(36) NOT NULL,
+    UserId VARCHAR(36) NOT NULL,
+    PRIMARY KEY (CourseId, UserId),
+    FOREIGN KEY (CourseId) REFERENCES Courses (Id),
+    FOREIGN KEY (UserId) REFERENCES Users (Id)
+);
+
+INSERT INTO Roles([Name]) 
+VALUES ('Admin');
+
+INSERT INTO Users
+	(FirstName, MiddleName, LastName, Age, Email, [Password], RoleId)
+VALUES
+	('Admin', 'Admin', 'Admin', 69, 'Admin@abv.bg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', (SELECT Id FROM Roles))
+-- Password: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 is password in sha256
+
+
+-- Close all connection
+USE master;
+GO
+ALTER DATABASE SchoolDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+GO
+DROP DATABASE SchoolDB
