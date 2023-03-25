@@ -7,6 +7,43 @@ CREATE TABLE Roles (
     [Name] VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE Questions (
+    Id VARCHAR(36) PRIMARY KEY DEFAULT NEWID(),
+    [Name] VARCHAR(1024) NOT NULL
+);
+
+CREATE TABLE Answers (
+    Id VARCHAR(36) PRIMARY KEY DEFAULT NEWID(),
+    [Name] VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE QuestionsAnswers (
+    QuestionId VARCHAR(36) NOT NULL,
+    AnswerId VARCHAR(36) NOT NULL,
+    IsCorrect BIT NOT NULL,
+    PRIMARY KEY (QuestionId, AnswerId),
+    FOREIGN KEY (QuestionId) REFERENCES Questions (Id),
+    FOREIGN KEY (AnswerId) REFERENCES Answers (Id)
+);
+
+-- Example how to insert a data into a QuestionsAnswers table
+/*
+INSERT INTO Questions([Name])
+VALUES ('This is a test?')
+
+INSERT INTO Answers([Name])
+VALUES ('Yes')
+
+INSERT INTO Answers([Name])
+VALUES ('No')
+
+INSERT INTO QuestionsAnswers ([QuestionId], [AnswerId], IsCorrect)
+VALUES ((SELECT Id FROM Questions), (SELECT Id FROM Answers WHERE [Name] = 'Yes'), 1)
+
+INSERT INTO QuestionsAnswers ([QuestionId], [AnswerId], IsCorrect)
+VALUES ((SELECT Id FROM Questions), (SELECT Id FROM Answers WHERE [Name] = 'No'), 0)
+*/
+
 CREATE TABLE Courses (
     Id VARCHAR(36) PRIMARY KEY DEFAULT NEWID(),
     [Name] VARCHAR(255) NOT NULL
