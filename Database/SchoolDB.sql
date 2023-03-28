@@ -117,10 +117,12 @@ CREATE TABLE CoursesSectionsFiles (
 );
 
 -- Example how to store a file
+/*
 INSERT INTO Files ([Filename], FileData)
 VALUES ('example.txt', (SELECT BulkColumn FROM OPENROWSET(BULK 'C:\Users\user\Downloads\example.txt', SINGLE_BLOB) AS FileData));
+*/
 
-
+-- Add default User and Role which is admin
 INSERT INTO Roles([Name]) 
 VALUES ('Admin');
 
@@ -132,6 +134,7 @@ VALUES
 
 
 -- Example how to insert a data into a QuestionsAnswers table
+/*
 INSERT INTO Questions([Name], [Points])
 VALUES ('This is a test?', 10)
 
@@ -146,11 +149,13 @@ VALUES ((SELECT Id FROM Questions), (SELECT Id FROM Answers WHERE [Name] = 'Yes'
 
 INSERT INTO QuestionsAnswers ([QuestionId], [AnswerId], IsCorrect)
 VALUES ((SELECT Id FROM Questions), (SELECT Id FROM Answers WHERE [Name] = 'No'), 0)
-
+*/
 
 -- Close all connection and delete db
+/*
 USE master;
 GO
 ALTER DATABASE SchoolDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 GO
 DROP DATABASE SchoolDB
+*/
