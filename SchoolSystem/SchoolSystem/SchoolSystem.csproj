@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolSystem.BLL\SchoolSystem.BLL.csproj" />
+    <ProjectReference Include="..\SchoolSystem.DAL\SchoolSystem.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

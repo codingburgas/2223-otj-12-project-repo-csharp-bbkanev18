@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SchoolSystem.DAL.Models;
 using SchoolSystem.Models;
 using System.Diagnostics;
 
@@ -7,15 +9,18 @@ namespace SchoolSystem.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SchoolDBContext _schoolDBContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SchoolDBContext schoolDBContext)
         {
+            _schoolDBContext = schoolDBContext;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
+            return View(user);
         }
 
         public IActionResult Privacy()

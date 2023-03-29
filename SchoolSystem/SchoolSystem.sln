@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolSystem", "SchoolSyste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolSystem.DAL", "SchoolSystem.DAL\SchoolSystem.DAL.csproj", "{31D491BF-E84E-4411-AE14-2060E5F4C794}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolSystem.BLL", "SchoolSystem.BLL\SchoolSystem.BLL.csproj", "{92C3619D-11B2-4098-A0B2-4C19DD4E47BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{31D491BF-E84E-4411-AE14-2060E5F4C794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31D491BF-E84E-4411-AE14-2060E5F4C794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31D491BF-E84E-4411-AE14-2060E5F4C794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C3619D-11B2-4098-A0B2-4C19DD4E47BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C3619D-11B2-4098-A0B2-4C19DD4E47BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C3619D-11B2-4098-A0B2-4C19DD4E47BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C3619D-11B2-4098-A0B2-4C19DD4E47BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
