@@ -19,6 +19,7 @@ namespace SchoolSystem.Controllers
 
         public async Task<IActionResult> Index()
         {
+            
             IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
             return View(user);
         }
