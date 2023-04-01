@@ -3,10 +3,12 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
 <table class="table">
     <thead>
         <tr>
+            <th>
+                
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -20,6 +22,10 @@
         @foreach (var user in Model)
         {
             <tr>
+                <td>
+                    
+                </td>
+
                 <td>
                     @user.FirstName
                 </td>

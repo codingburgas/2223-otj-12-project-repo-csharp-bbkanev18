@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolSystem.DAL.Models;
 
@@ -10,6 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SchoolDBContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+builder.Services.AddAuthentication("login")
+.AddCookie("login", options =>
+{
+    options.Cookie.Name = "MyCookie";
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+});
+
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\keys"))
+    .SetApplicationName("SchoolSystem");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -29,6 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
