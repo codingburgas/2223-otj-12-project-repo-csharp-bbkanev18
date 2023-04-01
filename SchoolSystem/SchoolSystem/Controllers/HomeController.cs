@@ -25,7 +25,7 @@ namespace SchoolSystem.Controllers
         public async Task<IActionResult> Index()
         {
             var user1 = _schoolDBContext.Users.ToArray();
-
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user1[0].FirstName),
@@ -41,7 +41,7 @@ namespace SchoolSystem.Controllers
             };
 
             HttpContext.SignInAsync("login", new ClaimsPrincipal(claimsIdentity), authProperties).Wait();
-
+            await HttpContext.SignOutAsync();
             IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
             return View(user);
         }
