@@ -1,12 +1,16 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SchoolSystem.BLL.Services;
+using SchoolSystem.BLL.Services.interfaces;
 using SchoolSystem.DAL.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // example how to use dependency injection
 // builder.Services.AddScoped<Iclass, Class>();
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 // Connction to db
 builder.Services.AddDbContext<SchoolDBContext>(options => options.UseSqlServer(

@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolSystem.DAL.Models;
 using SchoolSystem.Models;
 using System.Diagnostics;
 using System.Security.Claims;
-using System.Text.Json.Serialization;
 
 namespace SchoolSystem.Controllers
 {
