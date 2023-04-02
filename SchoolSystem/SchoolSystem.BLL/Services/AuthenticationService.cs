@@ -10,28 +10,34 @@ namespace SchoolSystem.BLL.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public ClaimsIdentity SignIn(UserSignInDataTransferObject user, SchoolDBContext dBContext)
+        private readonly SchoolDBContext _schoolDBContext;
+        public AuthenticationService(SchoolDBContext schoolDBContext)
         {
-            var users = dBContext.Users.ToList();
+            _schoolDBContext = schoolDBContext;
+        }
+
+        public ClaimsIdentity SignIn(UserSignInDataTransferObject user)
+        {
+            var users = _schoolDBContext.Users.ToList();
             var userPassword = ComputeSha256Hash(user.Password);
 
             foreach (var item in users)
             {
                 if (user.Email == item.Email && userPassword == item.Password)
-                    return GenerateTokes(item,dBContext);
+                    return GenerateTokes(item);
             }
 
             return new ClaimsIdentity();
         }
 
-        public void SignUp(UserSignInDataTransferObject user, SchoolDBContext dBContext)
+        public void SignUp(UserSignInDataTransferObject user)
         {
             throw new NotImplementedException();
         }
 
-        private string GetRole(string roleId, SchoolDBContext dBContext)
+        private string GetRole(string roleId)
         {
-            var roles = dBContext.Roles.ToList();
+            var roles = _schoolDBContext.Roles.ToList();
 
             foreach (var role in roles)
             {
@@ -59,12 +65,13 @@ namespace SchoolSystem.BLL.Services
             }
         }
 
-        private ClaimsIdentity GenerateTokes(User user, SchoolDBContext dBContext)
+
+        private ClaimsIdentity GenerateTokes(User user)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Id),
-                new Claim(ClaimTypes.Role, GetRole(user.RoleId, dBContext))
+                new Claim(ClaimTypes.Role, GetRole(user.RoleId))
             };
 
             return new ClaimsIdentity(claims, "login");

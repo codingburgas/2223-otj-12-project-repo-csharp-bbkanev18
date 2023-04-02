@@ -28,7 +28,7 @@
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-primary nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Hello</a>
+                                <a class="" asp-area="" asp-controller="Home" asp-action="Privacy">@User.Identity.Name</a>
                             </li>
                         }
                         else

@@ -33,11 +33,12 @@ namespace SchoolSystem.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            var claimsIdentity = _authenticationService.SignIn(user, _schoolDBContext);
+
+            var claimsIdentity = _authenticationService.SignIn(user);
 
             if(claimsIdentity.Claims.Count() == 0)
             {
-                ModelState.AddModelError("Account Error", "Invalid Email or Password");
+                ModelState.AddModelError(string.Empty, "Invalid Email or Password");
                 return View();
             }
 
