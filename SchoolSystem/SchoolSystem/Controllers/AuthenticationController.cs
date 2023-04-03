@@ -67,5 +67,12 @@ namespace SchoolSystem.Controllers
 
             return RedirectToAction("SignIn", "Authentication");
         }
+
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            HttpContext.SignOutAsync().Wait();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

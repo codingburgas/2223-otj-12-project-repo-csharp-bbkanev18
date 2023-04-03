@@ -44,7 +44,8 @@ namespace SchoolSystem.Controllers
             await HttpContext.SignOutAsync();
             */
             //IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
-            HttpContext.SignOutAsync().Wait();
+            //HttpContext.SignOutAsync().Wait();
+
             var userId = User?.Identity?.Name ?? string.Empty;
             user = _authenticationService.GetUserById(userId);
             return View(user);

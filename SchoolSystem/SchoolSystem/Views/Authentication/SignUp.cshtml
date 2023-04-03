@@ -10,6 +10,16 @@
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="MiddleName"></label>
+        <input asp-for="MiddleName" class="form-control" required />
+        <span asp-validation-for="MiddleName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" required />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" required />
         <span asp-validation-for="Email" class="text-danger"></span>
@@ -18,6 +28,21 @@
         <label asp-for="Password"></label>
         <input asp-for="Password" type="password" class="form-control" required />
         <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age"></label>
+        <input asp-for="Age" class="form-control" required />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address">Address (optional)</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone">Phone (optional)</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
     <div class="form-group" style="margin-top: 20px">
         <input type="submit" value="Sign up" class="btn btn-primary"/>
