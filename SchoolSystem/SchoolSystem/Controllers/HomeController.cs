@@ -1,27 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolSystem.DAL.DataTransferObjects;
 using SchoolSystem.DAL.Models;
 using SchoolSystem.Models;
 using System.Diagnostics;
 using System.Security.Claims;
+using IAuthenticationService = SchoolSystem.BLL.Services.interfaces.IAuthenticationService;
 
 namespace SchoolSystem.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SchoolDBContext _schoolDBContext;
+        private readonly IAuthenticationService _authenticationService;
 
-        public HomeController(ILogger<HomeController> logger, SchoolDBContext schoolDBContext)
+        public HomeController(ILogger<HomeController> logger, IAuthenticationService authenticationService)
         {
-
-            _schoolDBContext = schoolDBContext;
             _logger = logger;
+            _authenticationService = authenticationService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index(User user)
         {
+            /*
             var user1 = _schoolDBContext.Users.ToArray();
             
             var claims = new List<Claim>
@@ -40,7 +42,11 @@ namespace SchoolSystem.Controllers
 
             HttpContext.SignInAsync("login", new ClaimsPrincipal(claimsIdentity), authProperties).Wait();
             await HttpContext.SignOutAsync();
-            IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
+            */
+            //IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
+            HttpContext.SignOutAsync().Wait();
+            var userId = User?.Identity?.Name ?? string.Empty;
+            user = _authenticationService.GetUserById(userId);
             return View(user);
         }
 

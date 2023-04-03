@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model SchoolSystem.DAL.Models.User
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +29,7 @@
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item ms-auto">
-                                <a class="" asp-area="" asp-controller="Home" asp-action="Privacy">@User.Identity.Name</a>
+                                <a class="" asp-area="" asp-controller="Home" asp-action="Privacy">@Model.FirstName @Model.LastName</a>
                             </li>
                         }
                         else

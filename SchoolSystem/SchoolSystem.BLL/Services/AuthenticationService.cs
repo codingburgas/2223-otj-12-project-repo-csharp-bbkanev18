@@ -34,6 +34,10 @@ namespace SchoolSystem.BLL.Services
         {
             throw new NotImplementedException();
         }
+        public User GetUserById(string userId)
+        {
+            return _schoolDBContext.Users.Where(user => user.Id == userId).FirstOrDefault() ?? new User();
+        }
 
         private string GetRole(string roleId)
         {
@@ -44,7 +48,7 @@ namespace SchoolSystem.BLL.Services
                 if (roleId == role.Id)
                     return role.Name;
             }
-            return "user";
+            return "guest";
         }
 
         private static string ComputeSha256Hash(string rawData)

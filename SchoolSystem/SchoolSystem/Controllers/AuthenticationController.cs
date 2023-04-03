@@ -13,13 +13,11 @@ namespace SchoolSystem.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly SchoolDBContext _schoolDBContext;
         private readonly IAuthenticationService _authenticationService;
 
-        public AuthenticationController(SchoolDBContext schoolDBContext, IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
             _authenticationService= authenticationService;
-            _schoolDBContext = schoolDBContext;
         }
 
         [HttpGet]
