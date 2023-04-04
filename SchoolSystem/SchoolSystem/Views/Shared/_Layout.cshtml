@@ -1,5 +1,4 @@
-﻿@model SchoolSystem.DAL.Models.User
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,7 +28,7 @@
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item ms-auto">
-                                <a class="btn nav-link" asp-area="" asp-controller="Authentication" asp-action="Privacy">@Model.FirstName @Model.LastName</a>
+                                <a class="btn nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">My Account</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-link" asp-area="" asp-controller="Authentication" asp-action="LogOut">(Logout)</a>

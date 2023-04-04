@@ -21,7 +21,7 @@ namespace SchoolSystem.Controllers
             _authenticationService = authenticationService;
         }
 
-        public IActionResult Index(User user)
+        public IActionResult Index()
         {
             /*
             var user1 = _schoolDBContext.Users.ToArray();
@@ -46,9 +46,9 @@ namespace SchoolSystem.Controllers
             //IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
             //HttpContext.SignOutAsync().Wait();
 
-            var userId = User?.Identity?.Name ?? string.Empty;
-            user = _authenticationService.GetUserById(userId);
-            return View(user);
+            //var userId = User?.Identity?.Name ?? string.Empty;
+            //user = _authenticationService.GetUserById(userId);
+            return View();
         }
 
         public IActionResult Privacy()

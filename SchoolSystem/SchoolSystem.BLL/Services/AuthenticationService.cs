@@ -76,6 +76,7 @@ namespace SchoolSystem.BLL.Services
             {
                 new Claim(ClaimTypes.Name, user.Id),
                 new Claim(ClaimTypes.Role, GetRole(user.RoleId))
+                //new Claim()
             };
 
             return new ClaimsIdentity(claims, "login");
