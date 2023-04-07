@@ -58,10 +58,16 @@ namespace SchoolSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignUp(User user)
+        public IActionResult SignUp(UserSignUpDataTransferObject user)
         {
             if (!ModelState.IsValid)
             {
+                return View();
+            }
+
+            if (_authenticationService.SignUp(user))
+            {
+                ModelState.AddModelError("Email", "This email already exist");
                 return View();
             }
 

@@ -11,7 +11,7 @@ namespace SchoolSystem.BLL.Services.interfaces
 {
     public interface IAuthenticationService
     {
-        public void SignUp(UserSignInDataTransferObject user);
+        public bool SignUp(UserSignUpDataTransferObject user);
         public ClaimsIdentity SignIn(UserSignInDataTransferObject user);
 
         public User GetUserById(string userId);

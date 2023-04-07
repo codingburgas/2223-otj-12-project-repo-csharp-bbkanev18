@@ -122,14 +122,23 @@ INSERT INTO Files ([Filename], FileData)
 VALUES ('example.txt', (SELECT BulkColumn FROM OPENROWSET(BULK 'C:\Users\user\Downloads\example.txt', SINGLE_BLOB) AS FileData));
 */
 
--- Add default User and Role which is admin
+-- Add default roles which is guest, user, teacher, admin
 INSERT INTO Roles([Name]) 
-VALUES ('Admin');
+VALUES ('guest');
+
+INSERT INTO Roles([Name]) 
+VALUES ('user');
+
+INSERT INTO Roles([Name]) 
+VALUES ('teacher');
+
+INSERT INTO Roles([Name]) 
+VALUES ('admin');
 
 INSERT INTO Users
 	(FirstName, MiddleName, LastName, Age, Email, [Password], RoleId, FileId)
 VALUES
-	('Admin', 'Admin', 'Admin', 69, 'Admin@abv.bg', 'ec9c81957e5bbfb455d9bd41091c56399291bfdcbd00b1ec4b9e8e1a09c841e2', (SELECT Id FROM Roles), (SELECT Id FROM Files))
+	('Admin', 'Admin', 'Admin', 69, 'Admin@abv.bg', 'ec9c81957e5bbfb455d9bd41091c56399291bfdcbd00b1ec4b9e8e1a09c841e2', (SELECT Id FROM Roles))
 -- Password: ec9c81957e5bbfb455d9bd41091c56399291bfdcbd00b1ec4b9e8e1a09c841e2 is 'Test!1234' in sha256
 
 

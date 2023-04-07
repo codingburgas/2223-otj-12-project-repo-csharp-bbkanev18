@@ -30,16 +30,42 @@ namespace SchoolSystem.BLL.Services
             return new ClaimsIdentity();
         }
 
-        public void SignUp(UserSignInDataTransferObject user)
+        public bool SignUp(UserSignUpDataTransferObject user)
         {
-            throw new NotImplementedException();
+            if (CheckEmail(user.Email))
+                return true;
+            var newUser = TransferToUser(user);
+            _schoolDBContext.Add(newUser);
+            _schoolDBContext.SaveChanges();
+            return false;
         }
         public User GetUserById(string userId)
         {
             return _schoolDBContext.Users.Where(user => user.Id == userId).FirstOrDefault() ?? new User();
         }
 
-        private string GetRole(string roleId)
+        private User TransferToUser(UserSignUpDataTransferObject user)
+        {
+            return new User
+            {
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = ComputeSha256Hash(user.Password),
+                Age = user.Age,
+                Address = user.Address,
+                Phone = user.Phone,
+                RoleId = GetDefaultRoleId(),
+            };
+        }
+        private string GetDefaultRoleId()
+        {
+            var role = _schoolDBContext.Roles.Where(roles => roles.Name == "guest").First();
+            return role.Id ?? string.Empty;
+        }
+
+        private string GetRoleById(string roleId)
         {
             var roles = _schoolDBContext.Roles.ToList();
 
@@ -49,6 +75,11 @@ namespace SchoolSystem.BLL.Services
                     return role.Name;
             }
             return "guest";
+        }
+
+        private bool CheckEmail(string email)
+        {
+            return _schoolDBContext.Users.Where(users => users.Email== email).Count() > 0;
         }
 
         private static string ComputeSha256Hash(string rawData)
@@ -75,7 +106,7 @@ namespace SchoolSystem.BLL.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Id),
-                new Claim(ClaimTypes.Role, GetRole(user.RoleId))
+                new Claim(ClaimTypes.Role, GetRoleById(user.RoleId))
                 //new Claim()
             };
 
