@@ -4,6 +4,14 @@
     ViewData["Title"] = "Courses";
 }
 
+@if(User.IsInRole("teacher") || User.IsInRole("admin"))
+{
+    <a asp-controller="Course" asp-action="CreateCourse" class="bi bi-plus-circle-fill" style="font-size: 20px">
+        Create a new course
+    </a>
+    <hr>
+}
+
 @if (Model.Count() > 0)
 {
     @foreach (var course in Model)
@@ -21,9 +29,4 @@ else
     </div>
 }
 
-@if(User.IsInRole("teacher") || User.IsInRole("admin"))
-{
-    <a asp-controller="Course" asp-action="CourseSection">
-        Test
-    </a>
-}
+

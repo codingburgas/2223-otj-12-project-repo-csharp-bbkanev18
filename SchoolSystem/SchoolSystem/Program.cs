@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddScoped<Iclass, Class>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 // Connction to db
 builder.Services.AddDbContext<SchoolDBContext>(options => options.UseSqlServer(
