@@ -27,6 +27,7 @@ namespace SchoolSystem.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SignIn(UserSignInDataTransferObject user)
         {
             if (!ModelState.IsValid)
@@ -58,6 +59,7 @@ namespace SchoolSystem.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SignUp(UserSignUpDataTransferObject user)
         {
             if (!ModelState.IsValid)
