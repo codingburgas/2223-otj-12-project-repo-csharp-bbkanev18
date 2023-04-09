@@ -50,6 +50,35 @@ namespace SchoolSystem.Controllers
             return RedirectToAction("Index", "Course");
         }
 
+        [HttpGet]
+        public IActionResult EditCourse(string? id)
+        {
+            return View(_courseService.GetCourseById(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCourse(Course course)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            if (_courseService.EditCourse(course))
+            {
+                ModelState.AddModelError(string.Empty, "There are error in syntax or this name is taken");
+                return View();
+            }
+
+            var existingCourse = await _schoolDBContext.Courses.FindAsync(course.Id);
+
+            if (existingCourse != null)
+                _courseService.DetachingCourse(existingCourse);
+            _courseService.AttachCourse(course);
+
+            _schoolDBContext.Update(course);
+            _schoolDBContext.SaveChanges();
+
+            return RedirectToAction("Index", "Course");
+        }
 
         public IActionResult CourseSection()
         {

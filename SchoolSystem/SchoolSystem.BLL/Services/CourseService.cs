@@ -1,4 +1,5 @@
-﻿using SchoolSystem.BLL.Services.interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SchoolSystem.BLL.Services.interfaces;
 using SchoolSystem.DAL.DataTransferObjects;
 using SchoolSystem.DAL.Models;
 using System;
@@ -20,11 +21,12 @@ namespace SchoolSystem.BLL.Services
 
         public bool CreateCourse(CourseCreateTransferObject course)
         {
-            if(CheckCourseName(course))
-            {
+            var tempCourse = TransferToCourse(course);
+
+            if (CheckCourseName(tempCourse))
                 return true;
-            }
-            _schoolDBContext.Add(TransferToCourse(course));
+
+            _schoolDBContext.Add(tempCourse);
             _schoolDBContext.SaveChanges();
             if (course?.SectionName?.Count()>0)
             {
@@ -56,7 +58,7 @@ namespace SchoolSystem.BLL.Services
             };
         }
 
-        private bool CheckCourseName(CourseCreateTransferObject course)
+        private bool CheckCourseName(Course course)
         {
             var courses = _schoolDBContext.Courses;
             foreach (var item in courses)
@@ -76,6 +78,31 @@ namespace SchoolSystem.BLL.Services
                     return item.Id;
             }
             return string.Empty;
+        }
+
+        public Course? GetCourseById(string? courseId)
+        {
+            return _schoolDBContext.Courses.Where(courses => courses.Id == courseId).FirstOrDefault();
+        }
+
+        public bool EditCourse(Course course)
+        {
+            if (CheckCourseName(course))
+                return true;
+            if (course.Name.Length<2 || course.Name.Length>250)
+                return true;
+
+            return false;
+        }
+
+        public void DetachingCourse(Course course)
+        {
+            _schoolDBContext.Entry(course).State = EntityState.Deleted;
+        }
+
+        public void AttachCourse(Course course)
+        {
+            _schoolDBContext.Entry(course).State|= EntityState.Modified;
         }
     }
 }
