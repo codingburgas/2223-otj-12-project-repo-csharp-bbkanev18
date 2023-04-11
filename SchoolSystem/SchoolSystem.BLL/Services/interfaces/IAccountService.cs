@@ -13,5 +13,7 @@ namespace SchoolSystem.BLL.Services.interfaces
         public UserSignUpDataTransferObject GetUserById(string id);
 
         public bool UpdateUser(UserSignUpDataTransferObject user);
+
+        public bool UpdateUserPassword(UserSignUpDataTransferObject user);
     }
 }
