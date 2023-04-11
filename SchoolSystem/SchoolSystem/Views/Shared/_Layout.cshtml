@@ -33,7 +33,7 @@
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item ms-auto">
-                                <a class="btn nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">My Account</a>
+                                <a class="btn nav-link" asp-area="" asp-controller="Account" asp-action="Index">My Account <span class="bi bi-person-circle"></span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-link" asp-area="" asp-controller="Authentication" asp-action="LogOut">(Logout)</a>

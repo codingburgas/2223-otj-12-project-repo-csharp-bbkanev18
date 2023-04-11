@@ -23,3 +23,9 @@
          If you do not have account <a asp-area="" asp-controller="Authentication" asp-action="SignUp">(Sign up)</a>
     </div>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

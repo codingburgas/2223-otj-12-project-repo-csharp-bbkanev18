@@ -1,5 +1,10 @@
 ﻿
 @{
-    ViewData["Title"] = "Course Section";
+    ViewData["Title"] = "Course Section Page";
 }
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

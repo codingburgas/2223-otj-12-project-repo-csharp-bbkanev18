@@ -39,10 +39,6 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.SaveChanges();
             return false;
         }
-        public User GetUserById(string userId)
-        {
-            return _schoolDBContext.Users.Where(user => user.Id == userId).FirstOrDefault() ?? new User();
-        }
 
         private User TransferToUser(UserSignUpDataTransferObject user)
         {

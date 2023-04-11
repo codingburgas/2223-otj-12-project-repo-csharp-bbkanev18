@@ -1,11 +1,11 @@
 ﻿@model SchoolSystem.DAL.DataTransferObjects.UserSignUpDataTransferObject
-@{
-    ViewData["Title"] = "Sign up";
-}
 
-<h1>Sign up</h1>
+@{
+    ViewData["Title"] = "Edit Account Page";
+}
+<h1>Edit Account</h1>
 <hr>
-<form method="post" asp-action="SignUp" asp-controller="Authentication">
+<form method="post" asp-action="EditAccount" asp-controller="Account">
     <div class="form-group">
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" class="form-control" required />
@@ -27,16 +27,6 @@
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" required />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" type="password" class="form-control" required />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="Age"></label>
         <input asp-for="Age" class="form-control" required />
         <span asp-validation-for="Age" class="text-danger"></span>
@@ -52,10 +42,14 @@
         <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
     <div class="form-group" style="margin-top: 20px">
-        <input type="submit" value="Sign up" class="btn btn-primary"/>
+        <input type="submit" value="Save changes" class="btn btn-primary"/>
     </div>
     <div asp-validation-summary="ModelOnly"></div>
 </form>
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-action="Index">Back to account</a>
+</div>
 
 @section Scripts {
     @{

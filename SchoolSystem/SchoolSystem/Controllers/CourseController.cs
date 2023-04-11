@@ -51,6 +51,7 @@ namespace SchoolSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, teacher")]
         public IActionResult EditCourse(string? id)
         {
             return View(_courseService.GetCourseById(id));
@@ -58,6 +59,7 @@ namespace SchoolSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin, teacher")]
         public async Task<IActionResult> EditCourse(Course course)
         {
             if (!ModelState.IsValid)

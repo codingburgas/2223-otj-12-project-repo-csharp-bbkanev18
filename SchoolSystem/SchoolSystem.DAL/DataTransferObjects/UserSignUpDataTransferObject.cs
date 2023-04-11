@@ -10,6 +10,8 @@ namespace SchoolSystem.DAL.DataTransferObjects
 {
     public class UserSignUpDataTransferObject
     {
+        public string? Id { get; set; } = string.Empty;
+
         [Display (Name = "FirstName")]
         [Required(ErrorMessage = "First name is required")]
         [MinLength(2, ErrorMessage = "The firstname must be at least 2 characters")]
