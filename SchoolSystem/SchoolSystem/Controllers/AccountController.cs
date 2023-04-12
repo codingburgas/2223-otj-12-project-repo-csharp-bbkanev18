@@ -49,7 +49,7 @@ namespace SchoolSystem.Controllers
                 return View();
             if(_accountService.UpdateUser(newUser))
             {
-                ModelState.AddModelError(string.Empty, "Error in saving data!");
+                ModelState.AddModelError(string.Empty, "There's an issue with the private data!");
                 return View();
             }
             TempData["Message"] = "Your changes have been saved.";

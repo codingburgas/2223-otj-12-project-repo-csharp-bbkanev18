@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SchoolSystem.DAL.DataTransferObjects.ManageUserTransferObject>
+
+@{
+    ViewData["Title"] = "Manage Users Page";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr>
+
+@if (TempData.ContainsKey("Message") && TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Firstname
+            </th>
+            <th>
+                LastName
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @user.FirstName
+                </td>
+                <td>
+                    @user.LastName
+                </td>
+                <td>
+                    @user.RoleName
+                </td>
+                <td>
+                    <a asp-action="EditUser" asp-route-id="@user.Id">Edit</a> |
+                    <a asp-action="DetailsUser" asp-route-id="@user.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

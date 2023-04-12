@@ -1,0 +1,81 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.ManageUserTransferObject
+
+@{
+    ViewData["Title"] = "Details Page";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Firstname
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            Middlename
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+        <dt class="col-sm-2">
+            Lastname
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Age
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class="col-sm-2">
+            Address
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Address != "" && Model.Address != null)
+            {
+                @Html.DisplayFor(model => model.Address)
+            }
+            else
+            {
+                @Html.DisplayName("No address provided")
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Phone
+        </dt>
+        <dd class="col-sm-10"> 
+            @if (Model.Phone != "" && Model.Phone != null)
+            {
+                @Html.DisplayFor(model => model.Phone)
+            }
+            else
+            {
+                @Html.DisplayName("No phone provided")
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditUser" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="ChangePassword" asp-route-id="@Model.Id">Change Password</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
