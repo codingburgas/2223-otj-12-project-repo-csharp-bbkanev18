@@ -136,9 +136,9 @@ INSERT INTO Roles([Name])
 VALUES ('admin');
 
 INSERT INTO Users
-	(FirstName, MiddleName, LastName, Age, Email, [Password], RoleId, FileId)
+	(FirstName, MiddleName, LastName, Age, Email, [Password], RoleId)
 VALUES
-	('Admin', 'Admin', 'Admin', 69, 'Admin@abv.bg', 'ec9c81957e5bbfb455d9bd41091c56399291bfdcbd00b1ec4b9e8e1a09c841e2', (SELECT Id FROM Roles))
+	('Admin', 'Admin', 'Admin', 69, 'Admin@abv.bg', 'ec9c81957e5bbfb455d9bd41091c56399291bfdcbd00b1ec4b9e8e1a09c841e2', (SELECT Id FROM Roles WHERE [Name] = 'admin'))
 -- Password: ec9c81957e5bbfb455d9bd41091c56399291bfdcbd00b1ec4b9e8e1a09c841e2 is 'Test!1234' in sha256
 
 
