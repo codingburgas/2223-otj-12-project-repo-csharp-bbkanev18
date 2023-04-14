@@ -45,7 +45,7 @@ namespace SchoolSystem.BLL.Services
                         {
                             Id = user.Id,
                             FirstName = user.FirstName,
-                            MiddleName = user.LastName,
+                            MiddleName = user.MiddleName,
                             LastName = user.LastName,
                             Email = user.Email,
                             Password = user.Password,
@@ -65,11 +65,17 @@ namespace SchoolSystem.BLL.Services
         public bool UpdateUser(ManageUserTransferObject user, string? role)
         {
             var currentUser = _schoolDBContext.Users.Find(user.Id);
+            var roleIdAdmin = _schoolDBContext.Roles.Where(roles => roles.Name == "admin").FirstOrDefault();
             if (currentUser == null)
                 return true;
             if (currentUser.Email == user.Email) { }
             else if (CheckEmail(user.Email))
                 return true;
+            if (currentUser.RoleId == roleIdAdmin?.Id)
+            {
+                if (CheckAdminRoleId(roleIdAdmin.Id))
+                    return true;
+            }
             if (role == null)
                 return true;
             else
@@ -78,6 +84,21 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.Update(currentUser);
             _schoolDBContext.SaveChanges();
             return false;
+        }
+
+        private bool CheckAdminRoleId(string? roleId)
+        {
+            var users = _schoolDBContext.Users.ToList();
+            int countAdmins = 0;
+            foreach (var user in users)
+            {
+                if(user.RoleId == roleId)
+                    countAdmins++;
+            }
+            if (countAdmins == 1)
+                return true;
+            else
+                return false;
         }
 
         private void SwapUser(User currentUser, ManageUserTransferObject newUser)
@@ -127,6 +148,11 @@ namespace SchoolSystem.BLL.Services
                 }
                 return builder.ToString();
             }
+        }
+
+        public List<Role> GetRoles()
+        {
+            return _schoolDBContext.Roles.ToList();
         }
     }
 }

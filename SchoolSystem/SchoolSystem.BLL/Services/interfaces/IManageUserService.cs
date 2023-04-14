@@ -1,4 +1,5 @@
 ﻿using SchoolSystem.DAL.DataTransferObjects;
+using SchoolSystem.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace SchoolSystem.BLL.Services.interfaces
         public bool UpdateUser(ManageUserTransferObject user, string? role);
 
         public bool UpdateUserPassword(ManageUserTransferObject user);
+
+        public List<Role> GetRoles();
     }
 }

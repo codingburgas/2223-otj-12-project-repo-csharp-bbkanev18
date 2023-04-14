@@ -29,8 +29,7 @@ namespace SchoolSystem.Controllers
         [HttpGet]
         public IActionResult EditUser(string? id)
         {
-            var roles = _schoolDBContext.Roles.ToList();
-            ViewBag.Roles = roles;
+            ViewBag.Roles = _manageUserService.GetRoles();
             var model = _manageUserService.GetManageUserTransferObjectById(id);
             return View(model);
         }
@@ -44,8 +43,9 @@ namespace SchoolSystem.Controllers
                 return View();
             if (_manageUserService.UpdateUser(user, role))
             {
+                ViewBag.Roles = _manageUserService.GetRoles();
                 ModelState.AddModelError(string.Empty, "There's an issue with the private data!");
-                return View();
+                return View(user);
             }
             TempData["Message"] = $"The changes for the user with email '{user.Email}' have been successfully updated.";
             return RedirectToAction("Index", "ManageUser");
