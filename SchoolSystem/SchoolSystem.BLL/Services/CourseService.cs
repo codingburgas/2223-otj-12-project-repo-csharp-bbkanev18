@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SchoolSystem.BLL.Services
 {
@@ -33,14 +34,15 @@ namespace SchoolSystem.BLL.Services
                 var courseId = GetCourseId(course);
                 foreach (var sectionName in course.SectionName)
                 {
-                    if(sectionName != null)
+                    if (sectionName != null)
+                    {
                         _schoolDBContext.Add(TransferToCourseSection(sectionName, courseId));
+                    }
                 }
             }
             _schoolDBContext.SaveChanges();
             return false;
         }
-
         private Course TransferToCourse(CourseCreateTransferObject course)
         {
             return new Course
@@ -103,6 +105,32 @@ namespace SchoolSystem.BLL.Services
         public void AttachCourse(Course course)
         {
             _schoolDBContext.Entry(course).State|= EntityState.Modified;
+        }
+
+        public List<CourseSectionTransferObject> GetCourseSection(string? courseId)
+        {
+            var temp = new List<CourseSectionTransferObject>();
+            var courseSections = _schoolDBContext.CoursesSections.ToList();
+            var course = _schoolDBContext.Courses.Find(courseId);
+            foreach (var section in courseSections)
+            {
+                if(section.CourseId == courseId)
+                {
+                    var TransferObject = new CourseSectionTransferObject
+                    {
+                        Id = section.Id,
+                        Name = section.Name,
+                        CourseId = courseId,
+                        CourseName = course?.Name ?? string.Empty
+                    };
+                    temp.Add(TransferObject);
+                }
+            }
+
+            if(temp.Count == 0)
+                temp.Add(new CourseSectionTransferObject { CourseName = course?.Name ?? string.Empty });
+
+            return temp;
         }
     }
 }

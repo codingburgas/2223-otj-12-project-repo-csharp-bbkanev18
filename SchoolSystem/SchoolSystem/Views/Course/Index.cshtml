@@ -20,7 +20,7 @@
     @foreach (var course in Model)
     {
         <div style="font-size: 25px; display:flex; justify-content: space-between; align-items: center;">
-            <a asp-controller="Course" asp-action="CourseSection" style="text-align:right;">@course.Name</a>
+                    <a asp-route-id="@course.Id" asp-action="CourseSection" style="text-align:right;">@course.Name</a>
             @if (User.IsInRole("teacher") || User.IsInRole("admin"))
             {
                 <a class="btn btn-success bi bi-pencil-square" asp-action="EditCourse" asp-route-id="@course.Id">Edit Course</a>

@@ -82,9 +82,11 @@ namespace SchoolSystem.Controllers
             return RedirectToAction("Index", "Course");
         }
 
-        public IActionResult CourseSection()
+        [HttpGet]
+        public IActionResult CourseSection(string? id)
         {
-            return View();
+            var model = _courseService.GetCourseSection(id);
+            return View(model);
         }
     }
 }

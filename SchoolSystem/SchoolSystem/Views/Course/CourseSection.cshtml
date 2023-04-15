@@ -1,7 +1,16 @@
-﻿
+﻿@model IEnumerable<SchoolSystem.DAL.DataTransferObjects.CourseSectionTransferObject>
+
 @{
     ViewData["Title"] = "Course Section Page";
 }
+
+@{
+    var courseName = Model.FirstOrDefault();
+}
+
+<h1>@courseName?.CourseName</h1>
+<hr>
+
 
 @section Scripts {
     @{

@@ -20,5 +20,7 @@ namespace SchoolSystem.BLL.Services.interfaces
         public void DetachingCourse(Course course);
 
         public void AttachCourse(Course course);
+
+        public List<CourseSectionTransferObject> GetCourseSection(string? courseId);
     }
 }
