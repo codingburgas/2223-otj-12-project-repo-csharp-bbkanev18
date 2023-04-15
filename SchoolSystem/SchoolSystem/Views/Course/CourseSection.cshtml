@@ -10,7 +10,14 @@
 
 <h1>@courseName?.CourseName</h1>
 <hr>
+@foreach (var courseSection in Model)
+{
+    <p>@courseName?.Name</p>
+}
 
+<div>
+    <a class="bi bi-arrow-bar-left" asp-action="Index">Back to courses</a>
+</div>
 
 @section Scripts {
     @{
