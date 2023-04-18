@@ -110,19 +110,37 @@ namespace SchoolSystem.BLL.Services
         public List<CourseSectionTransferObject> GetCourseSections(string? courseId)
         {
             var temp = new List<CourseSectionTransferObject>();
-            var courseSections = _schoolDBContext.CoursesSections.ToList();
+            var TransferObject = new CourseSectionTransferObject();
+            //var test = _schoolDBContext.CoursesSections.Include(t => t.Tests).ToList();
+            /*
+            var test = _schoolDBContext.Tests.FirstOrDefault();
+            var book = _schoolDBContext.CoursesSections.Where(coures => coures.Name == "Test").FirstOrDefault();
+
+            book?.Tests.Add(test);
+            test?.CourseSections.Add(book);
+            _schoolDBContext.SaveChanges();
+            */
+            var courseSections = _schoolDBContext.CoursesSections.Include(t => t.Tests).Include(f=>f.Files).ToList();
             var course = _schoolDBContext.Courses.Find(courseId);
             foreach (var section in courseSections)
             { 
                 if(section.CourseId == courseId)
                 {
-                    var TransferObject = new CourseSectionTransferObject
+                    TransferObject = new CourseSectionTransferObject()
                     {
                         Id = section.Id,
                         Name = section.Name,
-                        CourseId = courseId,
+                        CourseId = courseId ?? string.Empty,
                         CourseName = course?.Name ?? string.Empty
                     };
+
+                    if (section.Tests.Count > 0)
+                        foreach (var test in section.Tests)
+                            TransferObject.Tests.Add(test);
+
+                    if (section.Files.Count > 0)
+                        foreach (var file in section.Files)
+                            TransferObject.Files.Add(file);
                     temp.Add(TransferObject);
                 }
             }

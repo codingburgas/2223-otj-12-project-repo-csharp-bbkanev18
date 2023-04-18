@@ -30,7 +30,21 @@
 
 @foreach (var courseSection in Model)
 {
-    <h3>@courseName?.Name</h3>
+    <h3>@courseSection.Name</h3>
+    @if (courseSection.Tests.Count > 0)
+    {
+        foreach (var test in courseSection.Tests)
+        {
+            <a class="h4 m-lg-5" href="">@test.Name</a>
+        }
+    }
+    @if (courseSection.Files.Count > 0)
+    {
+        foreach (var file in courseSection.Files)
+        {
+            <a class="h4 m-lg-5" href="">@file.Filename</a>
+        }
+    }
 }
 
 <div>

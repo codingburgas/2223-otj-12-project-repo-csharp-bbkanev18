@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolSystem.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace SchoolSystem.DAL.DataTransferObjects
         public string Name { get; set; } = string.Empty;
         public string CourseId { get; set; } = string.Empty;
         public string CourseName { get; set; } = string.Empty;
-
+        public List<Test> Tests { get; set; } = new List<Test>();
+        public List<Models.File> Files { get; set; } = new List<Models.File>();
     }
 }
