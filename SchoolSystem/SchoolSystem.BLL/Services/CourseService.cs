@@ -107,13 +107,13 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.Entry(course).State|= EntityState.Modified;
         }
 
-        public List<CourseSectionTransferObject> GetCourseSection(string? courseId)
+        public List<CourseSectionTransferObject> GetCourseSections(string? courseId)
         {
             var temp = new List<CourseSectionTransferObject>();
             var courseSections = _schoolDBContext.CoursesSections.ToList();
             var course = _schoolDBContext.Courses.Find(courseId);
             foreach (var section in courseSections)
-            {
+            { 
                 if(section.CourseId == courseId)
                 {
                     var TransferObject = new CourseSectionTransferObject
@@ -128,9 +128,34 @@ namespace SchoolSystem.BLL.Services
             }
 
             if(temp.Count == 0)
-                temp.Add(new CourseSectionTransferObject { CourseName = course?.Name ?? string.Empty });
+                temp.Add(new CourseSectionTransferObject { CourseId = course?.Id ?? string.Empty,CourseName = course?.Name ?? string.Empty });
 
             return temp;
+        }
+
+        public CourseSectionTransferObject GetCourseSection(string? courseId)
+        {
+            var course = _schoolDBContext.Courses.Find(courseId);
+            return new CourseSectionTransferObject
+            {
+                CourseId = courseId ?? string.Empty,
+                CourseName = course?.Name ?? string.Empty
+            };
+        }
+
+        public bool CreateSectionCourse(CourseSectionTransferObject transferObject)
+        {
+            if (transferObject == null)
+                return true;
+
+            var newCourseSectio = new CoursesSection();
+
+            newCourseSectio.Name = transferObject.Name;
+            newCourseSectio.CourseId = transferObject.Id;
+            
+            _schoolDBContext.Add(newCourseSectio);
+            _schoolDBContext.SaveChanges();
+            return false;
         }
     }
 }

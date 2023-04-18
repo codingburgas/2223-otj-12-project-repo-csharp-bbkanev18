@@ -83,10 +83,37 @@ namespace SchoolSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="user,admin,teacher")]
         public IActionResult CourseSection(string? id)
+        {
+            var model = _courseService.GetCourseSections(id);
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult AddSectionCourse(string? id) 
         {
             var model = _courseService.GetCourseSection(id);
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult AddSectionCourse(CourseSectionTransferObject transferObject)
+        {
+
+            if(!ModelState.IsValid)
+                return View();
+
+            if(_courseService.CreateSectionCourse(transferObject))
+            {
+                var model = _courseService.GetCourseSection(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Error in creating section!");
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Course");
         }
     }
 }

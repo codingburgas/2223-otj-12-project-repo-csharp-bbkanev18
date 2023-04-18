@@ -21,6 +21,9 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public void AttachCourse(Course course);
 
-        public List<CourseSectionTransferObject> GetCourseSection(string? courseId);
+        public List<CourseSectionTransferObject> GetCourseSections(string? courseId);
+        public CourseSectionTransferObject GetCourseSection(string? courseId);
+
+        public bool CreateSectionCourse(CourseSectionTransferObject transferObject);
     }
 }

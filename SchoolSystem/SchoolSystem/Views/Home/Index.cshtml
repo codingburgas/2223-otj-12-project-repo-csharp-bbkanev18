@@ -1,45 +1,39 @@
-﻿@* model IEnumerable<SchoolSystem.DAL.Models.User>*@
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-@*
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>
-                    
-                </td>
 
-                <td>
-                    @user.FirstName
-                </td>
+<div class="jumbotron">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to SchoolSystem!</h1>
+        <hr class="my-4">
+        <p class="lead">
+            SchoolSystem is an online learning platform designed to provide students, teachers, and lifelong learners with a flexible and accessible way to expand their knowledge and skills. With SchoolSystem, you can access a wide range of courses, lessons, assignments, and tests from anywhere in the world, at any time that suits you.
+        </p>
+        <p class="lead">
+            Our platform offers a variety of learning resources, including multimedia lectures, interactive quizzes, and practical assignments, to help you gain a deeper understanding of your chosen subjects. Whether you're looking to supplement your classroom learning, learn a new skill, or pursue a passion project, SchoolSystem offers a range of courses and resources to suit your needs.
+        </p>
+        <p class="lead">
+            As a student, you can enroll in courses, complete assignments, and take tests to earn grades and progress through your program of study. Teachers can create and manage courses, grade assignments and tests, and monitor the progress of their students. Lifelong learners can explore our library of courses and resources to pursue personal or professional development opportunities.
+        </p>
+        <p class="lead">
+            We believe that education should be accessible to everyone, regardless of their location, schedule, or financial circumstances. That's why we strive to make SchoolSystem an inclusive and affordable learning platform that can benefit anyone with a desire to learn and grow.
+        </p>
+        <hr class="my-4">
+    </div>
+    @if (!User?.Identity?.IsAuthenticated == true)
+    {
+        <p>To get started, register for an account.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Authentication" asp-action="SignUp">Register</a> 
+        <a class="btn btn-primary btn-lg" asp-controller="Authentication" asp-action="SignIn">Sign In</a>
+    }
+    else
+    {
+        <p>To get started, browse our available courses.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Course" asp-action="Index">Courses</a>
+    }
+</div>
 
-                <td>
-                    @user.LastName
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-*@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
