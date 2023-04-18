@@ -100,6 +100,7 @@ namespace SchoolSystem.Controllers
 
         [HttpPost]
         [Authorize(Roles ="admin,teacher")]
+        [ValidateAntiForgeryToken]
         public IActionResult AddSectionCourse(CourseSectionTransferObject transferObject)
         {
 
@@ -107,6 +108,33 @@ namespace SchoolSystem.Controllers
                 return View();
 
             if(_courseService.CreateSectionCourse(transferObject))
+            {
+                var model = _courseService.GetCourseSection(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Error in creating section!");
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Course");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult EditSectionCourse(string? id)
+        {
+            var model = _courseService.GetSection(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,teacher")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditSectionCourse(CourseSectionTransferObject transferObject)
+        {
+
+            if (!ModelState.IsValid)
+                return View();
+
+            if (_courseService.UpdateSectionCourse(transferObject))
             {
                 var model = _courseService.GetCourseSection(transferObject.Id);
                 ModelState.AddModelError(string.Empty, "Error in creating section!");

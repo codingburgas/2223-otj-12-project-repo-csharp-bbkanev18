@@ -175,5 +175,27 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.SaveChanges();
             return false;
         }
+
+        public CourseSectionTransferObject GetSection(string? sectionId)
+        {
+            var section = _schoolDBContext.CoursesSections.Find(sectionId);
+            return new CourseSectionTransferObject
+            {
+                Id = sectionId ?? string.Empty,
+                Name = section?.Name ?? string.Empty,
+                CourseId = section?.CourseId ?? string.Empty,
+            };
+        }
+
+        public bool UpdateSectionCourse(CourseSectionTransferObject transferObject)
+        {
+            var existingSection = _schoolDBContext.CoursesSections.Find(transferObject.Id);
+            if (existingSection == null)
+                return true;
+            existingSection.Name = transferObject.Name;
+            _schoolDBContext.Update(existingSection);
+            _schoolDBContext.SaveChanges();
+            return false;
+        }
     }
 }

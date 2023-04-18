@@ -30,7 +30,14 @@
 
 @foreach (var courseSection in Model)
 {
-    <h3>@courseSection.Name</h3>
+    <div style="font-size: 25px; display:flex; justify-content: space-between; align-items: center;">
+        <h3>@courseSection.Name</h3>
+        @if (User.IsInRole("teacher") || User.IsInRole("admin"))
+        {
+            <a class="btn btn-success bi bi-pencil-square" asp-action="EditSectionCourse" asp-route-id="@courseSection.Id">Edit section</a>
+        }
+    </div>
+
     @if (courseSection.Tests.Count > 0)
     {
         foreach (var test in courseSection.Tests)
@@ -45,6 +52,7 @@
             <a class="h4 m-lg-5" href="">@file.Filename</a>
         }
     }
+    <br>
 }
 
 <div>
