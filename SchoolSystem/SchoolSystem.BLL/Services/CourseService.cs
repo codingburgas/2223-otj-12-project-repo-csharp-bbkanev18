@@ -244,9 +244,9 @@ namespace SchoolSystem.BLL.Services
             };
         }
 
-        public bool CreateLesson(FileAddInSectionTransferObject transferObject)
+        public bool CreateLesson(FileAddInSectionTransferObject? transferObject)
         {
-            var section = _schoolDBContext.CoursesSections.Find(transferObject.Id);
+            var section = _schoolDBContext.CoursesSections.Find(transferObject?.Id);
             if(section== null) 
                 return true;
 
@@ -255,11 +255,11 @@ namespace SchoolSystem.BLL.Services
             byte[] fileData;
             using (var memoryStream = new MemoryStream())
             {
-                transferObject.File.CopyTo(memoryStream);
+                transferObject?.File?.CopyTo(memoryStream);
                 fileData = memoryStream.ToArray();
             }
 
-            newFile.Filename = transferObject.File.FileName;
+            newFile.Filename = transferObject?.File?.FileName ?? string.Empty;
             newFile.FileData = fileData;
             _schoolDBContext.Add(newFile);
             _schoolDBContext.SaveChanges();

@@ -182,18 +182,26 @@ namespace SchoolSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin,teache")]
         public IActionResult CreateLesson(FileAddInSectionTransferObject transferObject)
         {
-            if (!ModelState.IsValid)
+            // Check if the file size is more the 5 MB
+            if(transferObject?.File?.Length >= 5242880)
             {
                 var model = _courseService.GetFileAddInSection(transferObject.Id);
+                ModelState.AddModelError("File", "The maximum allowable size for an uploaded file is 5 MB.");
+                return View(model);
+            }
+            if (!ModelState.IsValid)
+            {
+                var model = _courseService.GetFileAddInSection(transferObject?.Id);
                 ModelState.AddModelError(string.Empty, "Error in data!");
                 return View(model);
             }
 
             if (_courseService.CreateLesson(transferObject))
             {
-                var model = _courseService.GetFileAddInSection(transferObject.Id);
+                var model = _courseService.GetFileAddInSection(transferObject?.Id);
                 ModelState.AddModelError(string.Empty, "Error in creating file!");
                 return View(model);
             }

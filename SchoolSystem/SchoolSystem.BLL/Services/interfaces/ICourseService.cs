@@ -32,7 +32,7 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public bool CreateTest(TestAddInSectionTransferObject transferObject);
 
-        public bool CreateLesson(FileAddInSectionTransferObject transferObject);
+        public bool CreateLesson(FileAddInSectionTransferObject? transferObject);
         
         public bool CreateSectionCourse(CourseSectionTransferObject transferObject);
 
