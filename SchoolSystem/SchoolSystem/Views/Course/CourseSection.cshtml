@@ -52,7 +52,7 @@
     {
         foreach (var test in courseSection.Tests)
         {
-            <a class="h4 m-lg-5 bi bi-clipboard-data-fill d-block" href="">
+            <a class="h4 m-lg-5 bi bi-clipboard-data-fill d-block" asp-controller="Test" asp-action="Index" asp-route-id="@test.Id">
                 @test.Name
             </a>
         }
