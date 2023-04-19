@@ -49,6 +49,7 @@ namespace SchoolSystem.DAL.DataTransferObjects
         [Display(Name = "Age")]
         [Required(ErrorMessage = "Age is required.")]
         [Range(14, 100, ErrorMessage = "The age must be between 14 and 100.")]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Age must be an integer value.")]
         public byte Age { get; set; }
 
         [Display(Name = "Address")]

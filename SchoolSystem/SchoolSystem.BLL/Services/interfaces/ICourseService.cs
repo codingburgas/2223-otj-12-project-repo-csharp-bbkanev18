@@ -25,6 +25,10 @@ namespace SchoolSystem.BLL.Services.interfaces
         public CourseSectionTransferObject GetCourseSection(string? courseId);
 
         public CourseSectionTransferObject GetSection(string? sectionId);
+
+        public TestAddInSectionTransferObject GetTestAddInSectionTransferObject(string? sectionId);
+
+        public bool CreateTest(TestAddInSectionTransferObject transferObject);
         
         public bool CreateSectionCourse(CourseSectionTransferObject transferObject);
 

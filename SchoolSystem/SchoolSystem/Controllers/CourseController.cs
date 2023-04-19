@@ -143,5 +143,26 @@ namespace SchoolSystem.Controllers
 
             return RedirectToAction("Index", "Course");
         }
+
+        [HttpGet]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult CreateTest(string? id)
+        {
+            var model = _courseService.GetTestAddInSectionTransferObject(id);
+            return View(model);
+        }
+
+        public IActionResult CreateTest(TestAddInSectionTransferObject transferObject)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            if (_courseService.CreateTest(transferObject))
+            {
+                var model = _courseService.GetTestAddInSectionTransferObject(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Error in creating section!");
+                return View(model);
+            }
+            return RedirectToAction("Index", "Course");
+        }
     }
 }

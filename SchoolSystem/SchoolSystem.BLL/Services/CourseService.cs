@@ -197,5 +197,40 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.SaveChanges();
             return false;
         }
+
+        public TestAddInSectionTransferObject GetTestAddInSectionTransferObject(string? sectionId)
+        {
+            var section = _schoolDBContext.CoursesSections.Find(sectionId);
+            return new TestAddInSectionTransferObject
+            {
+                SectionId = sectionId ?? string.Empty,
+                SectionName = section?.Name ?? string.Empty,
+                CourseId = section?.CourseId ?? string.Empty
+            };
+        }
+
+        public bool CreateTest(TestAddInSectionTransferObject transferObject)
+        {
+            var section  = _schoolDBContext.CoursesSections.Find(transferObject?.Id);
+            if(section== null) 
+                return true;
+
+            var newTest = new Test();
+
+            newTest.Name = transferObject?.Name ?? string.Empty;
+            newTest.TimeLimit = transferObject?.TimeLimit ?? 1;
+            newTest.Deadline = transferObject?.Deadline;
+            _schoolDBContext.Add(newTest);
+            _schoolDBContext.SaveChanges();
+
+            section.Tests.Add(newTest);
+            newTest.CourseSections.Add(section);
+
+            _schoolDBContext.SaveChanges();
+
+            return false;
+
+
+        }
     }
 }
