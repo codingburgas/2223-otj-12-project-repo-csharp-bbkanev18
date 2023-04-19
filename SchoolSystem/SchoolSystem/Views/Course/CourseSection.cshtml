@@ -30,23 +30,24 @@
 
 @foreach (var courseSection in Model)
 {
-    <div style="font-size: 25px; display: flex; justify-content: space-between; align-items: center;">
-        <div style="text-align: right;">
-            <h3>@courseSection.Name</h3>
-        </div>
-        @if (User.IsInRole("teacher") || User.IsInRole("admin"))
-        {
-            <div style="display: flex; align-items: center;">
-                <a class="btn btn-success bi bi-pencil-square" asp-action="EditSectionCourse" asp-route-id="@courseSection.Id">Edit section</a>
-                <div style="width: 10px;"></div> <!-- Creates space between buttons -->
-                <a class="btn btn-primary bi bi-database-add" asp-action="CreateTest" asp-route-id="@courseSection.Id">Add Test</a>
-                <div style="width: 10px;"></div> <!-- Creates space between buttons -->
-                <a class="btn btn-primary bi bi-file-earmark-plus" asp-action="CreateLesson" asp-route-id="@courseSection.Id">Add Lesson</a>
+    @if (courseSection.Name != "")
+    {
+        <div style="font-size: 25px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: right;">
+                <h3>@courseSection.Name</h3>
             </div>
-        }
-    </div>
-
-
+            @if (User.IsInRole("teacher") || User.IsInRole("admin"))
+            {
+                <div style="display: flex; align-items: center;">
+                    <a class="btn btn-success bi bi-pencil-square" asp-action="EditSectionCourse" asp-route-id="@courseSection.Id">Edit section</a>
+                    <div style="width: 10px;"></div> <!-- Creates space between buttons -->
+                    <a class="btn btn-primary bi bi-database-add" asp-action="CreateTest" asp-route-id="@courseSection.Id">Add Test</a>
+                    <div style="width: 10px;"></div> <!-- Creates space between buttons -->
+                    <a class="btn btn-primary bi bi-file-earmark-plus" asp-action="CreateLesson" asp-route-id="@courseSection.Id">Add Lesson</a>
+                </div>
+            }
+        </div>
+    }
 
     @if (courseSection.Tests.Count > 0)
     {
@@ -67,6 +68,7 @@
             </a>
         }
     }
+
     <br>
 }
 
