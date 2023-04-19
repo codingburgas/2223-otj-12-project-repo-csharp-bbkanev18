@@ -152,16 +152,52 @@ namespace SchoolSystem.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Authorize(Roles ="admin, teacher")]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateTest(TestAddInSectionTransferObject transferObject)
         {
             if (!ModelState.IsValid)
-                return View();
+            {
+                var model = _courseService.GetTestAddInSectionTransferObject(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Error in data!");
+                return View(model);
+            }
             if (_courseService.CreateTest(transferObject))
             {
                 var model = _courseService.GetTestAddInSectionTransferObject(transferObject.Id);
-                ModelState.AddModelError(string.Empty, "Error in creating section!");
+                ModelState.AddModelError(string.Empty, "Error in creating test!");
                 return View(model);
             }
+            return RedirectToAction("Index", "Course");
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult CreateLesson(string? id)
+        {
+            var model = _courseService.GetFileAddInSection(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateLesson(FileAddInSectionTransferObject transferObject)
+        {
+            if (!ModelState.IsValid)
+            {
+                var model = _courseService.GetFileAddInSection(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Error in data!");
+                return View(model);
+            }
+
+            if (_courseService.CreateLesson(transferObject))
+            {
+                var model = _courseService.GetFileAddInSection(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Error in creating file!");
+                return View(model);
+            }
+
             return RedirectToAction("Index", "Course");
         }
     }

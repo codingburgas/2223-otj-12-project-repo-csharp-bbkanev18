@@ -18,7 +18,7 @@ namespace SchoolSystem.DAL.DataTransferObjects
         public string Name { get; set; } = string.Empty;
         [Display(Name = "Time limit")]
         [Required(ErrorMessage = "Time limit is required.")]
-        [Range(1, 25, ErrorMessage = "The time must be between 1 and 25 minutes.")]
+        [Range(1, 30, ErrorMessage = "The time must be between 1 and 30 minutes.")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Time limit must be an integer value.")]
         public int TimeLimit { get; set; }
         public DateTime? Deadline { get; set; }

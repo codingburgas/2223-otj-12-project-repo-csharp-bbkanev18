@@ -41,7 +41,7 @@
                 <div style="width: 10px;"></div> <!-- Creates space between buttons -->
                 <a class="btn btn-primary bi bi-database-add" asp-action="CreateTest" asp-route-id="@courseSection.Id">Add Test</a>
                 <div style="width: 10px;"></div> <!-- Creates space between buttons -->
-                <a class="btn btn-primary bi bi-file-earmark-plus" asp-action="EditSectionCourse" asp-route-id="@courseSection.Id">Add Lesson</a>
+                <a class="btn btn-primary bi bi-file-earmark-plus" asp-action="CreateLesson" asp-route-id="@courseSection.Id">Add Lesson</a>
             </div>
         }
     </div>
@@ -52,17 +52,21 @@
     {
         foreach (var test in courseSection.Tests)
         {
-            <a class="h4 m-lg-5 bi bi-clipboard-data-fill" href="">@test.Name</a>
+            <a class="h4 m-lg-5 bi bi-clipboard-data-fill d-block" href="">
+                @test.Name
+            </a>
         }
     }
+
     @if (courseSection.Files.Count > 0)
     {
         foreach (var file in courseSection.Files)
         {
-            <a class="h4 m-lg-5 bi bi-file-earmark-arrow-down-fill" href="">@file.Filename</a>
+            <a class="h4 m-lg-5 bi bi-file-earmark-arrow-down-fill d-block" href="">
+                @file.Filename
+            </a>
         }
     }
-    <br>
     <br>
 }
 

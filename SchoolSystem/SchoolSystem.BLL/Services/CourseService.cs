@@ -232,5 +232,45 @@ namespace SchoolSystem.BLL.Services
 
 
         }
+
+        public FileAddInSectionTransferObject GetFileAddInSection(string? sectionId)
+        {
+            var section = _schoolDBContext.CoursesSections.Find(sectionId);
+            return new FileAddInSectionTransferObject
+            {
+                SectionId = sectionId ?? string.Empty,
+                SectionName = section?.Name ?? string.Empty,
+                CourseId = section?.CourseId ?? string.Empty
+            };
+        }
+
+        public bool CreateLesson(FileAddInSectionTransferObject transferObject)
+        {
+            var section = _schoolDBContext.CoursesSections.Find(transferObject.Id);
+            if(section== null) 
+                return true;
+
+            var newFile = new DAL.Models.File();
+
+            byte[] fileData;
+            using (var memoryStream = new MemoryStream())
+            {
+                transferObject.File.CopyTo(memoryStream);
+                fileData = memoryStream.ToArray();
+            }
+
+            newFile.Filename = transferObject.File.FileName;
+            newFile.FileData = fileData;
+            _schoolDBContext.Add(newFile);
+            _schoolDBContext.SaveChanges();
+
+            section.Files.Add(newFile);
+            newFile.CourseSections.Add(section);
+
+            _schoolDBContext.SaveChanges();
+            
+            return false;
+
+        }
     }
 }

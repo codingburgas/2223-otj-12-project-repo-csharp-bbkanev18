@@ -28,7 +28,11 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public TestAddInSectionTransferObject GetTestAddInSectionTransferObject(string? sectionId);
 
+        public FileAddInSectionTransferObject GetFileAddInSection(string? sectionId);
+
         public bool CreateTest(TestAddInSectionTransferObject transferObject);
+
+        public bool CreateLesson(FileAddInSectionTransferObject transferObject);
         
         public bool CreateSectionCourse(CourseSectionTransferObject transferObject);
 
