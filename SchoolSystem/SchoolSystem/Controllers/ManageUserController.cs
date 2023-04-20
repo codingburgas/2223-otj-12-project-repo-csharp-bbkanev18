@@ -39,15 +39,16 @@ namespace SchoolSystem.Controllers
         public IActionResult EditUser(ManageUserTransferObject user, string? role)
         {
             ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
             if (!ModelState.IsValid)
                 return View();
             if (_manageUserService.UpdateUser(user, role))
             {
                 ViewBag.Roles = _manageUserService.GetRoles();
-                ModelState.AddModelError(string.Empty, "There's an issue with the private data!");
+                ModelState.AddModelError(string.Empty, "Има проблем с предоставените данни!");
                 return View(user);
             }
-            TempData["Message"] = $"The changes for the user with email '{user.Email}' have been successfully updated.";
+            TempData["Message"] = $"Промените за потребителя с имейл '{user.Email}' са успешно актуализирани.";
             return RedirectToAction("Index", "ManageUser");
         }
 
@@ -75,10 +76,10 @@ namespace SchoolSystem.Controllers
 
             if (_manageUserService.UpdateUserPassword(user))
             {
-                ModelState.AddModelError(string.Empty, "Error: It is not possible to set an old password as the new password!");
+                ModelState.AddModelError(string.Empty, "Грешка: Не е възможно да зададете стара парола като нова парола!");
                 return View(user);
             }
-            TempData["Message"] = $"The password for the user with email '{user.Email}' has been changed successfully.";
+            TempData["Message"] = $"Паролата за потребителя с имейл '{user.Email}' е променено успешно.";
             return RedirectToAction("Index", "ManageUser");
         }
     }

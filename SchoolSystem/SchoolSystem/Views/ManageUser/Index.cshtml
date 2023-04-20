@@ -4,7 +4,7 @@
     ViewData["Title"] = "Manage Users Page";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Страница за управление на потребителите</h1>
 <hr>
 
 @if (TempData.ContainsKey("Message") && TempData["Message"] != null)
@@ -19,13 +19,13 @@
     <thead>
         <tr>
             <th>
-                Firstname
+                Първо име
             </th>
             <th>
-                LastName
+                Фамилия
             </th>
             <th>
-                Role
+                Роля
             </th>
             <th></th>
         </tr>
@@ -44,9 +44,9 @@
                     @user.RoleName
                 </td>
                 <td>
-                    <a asp-action="EditUser" asp-route-id="@user.Id">Edit</a> |
-                    <a asp-action="DetailsUser" asp-route-id="@user.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    <a asp-action="EditUser" asp-route-id="@user.Id">Редактиране</a> |
+                    <a asp-action="DetailsUser" asp-route-id="@user.Id">Подробности</a> |
+                    <a asp-action="Delete" asp-route-id="@user.Id">Изтриване</a>
                 </td>
             </tr>
         }

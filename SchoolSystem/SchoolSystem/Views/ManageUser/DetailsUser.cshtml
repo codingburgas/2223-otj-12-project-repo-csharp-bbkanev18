@@ -11,37 +11,37 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Firstname
+            Първо име
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FirstName)
         </dd>
         <dt class="col-sm-2">
-            Middlename
+            Презиме
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MiddleName)
         </dd>
         <dt class="col-sm-2">
-            Lastname
+            Фамилия
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt class="col-sm-2">
-            Email
+            Електронна поща
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
-            Age
+            Възраст
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Age)
         </dd>
         <dt class="col-sm-2">
-            Address
+            Адрес
         </dt>
         <dd class="col-sm-10">
             @if (Model.Address != "" && Model.Address != null)
@@ -50,11 +50,11 @@
             }
             else
             {
-                @Html.DisplayName("No address provided")
+                @Html.DisplayName("Не е предоставен адрес")
             }
         </dd>
         <dt class="col-sm-2">
-            Phone
+            Телефон
         </dt>
         <dd class="col-sm-10"> 
             @if (Model.Phone != "" && Model.Phone != null)
@@ -63,11 +63,11 @@
             }
             else
             {
-                @Html.DisplayName("No phone provided")
+                @Html.DisplayName("Няма предоставен телефон")
             }
         </dd>
         <dt class="col-sm-2">
-            Role
+            Роля
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.RoleName)
@@ -75,9 +75,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="EditUser" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="ChangePassword" asp-route-id="@Model.Id">Reset Password</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="EditUser" asp-route-id="@Model.Id">Редактиране</a> |
+    <a asp-action="ChangePassword" asp-route-id="@Model.Id">Нулиране на парола</a> |
+    <a asp-action="Index">Обратно към списъка</a>
 </div>
 
 @section Scripts {

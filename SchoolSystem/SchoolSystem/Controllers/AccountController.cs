@@ -45,11 +45,12 @@ namespace SchoolSystem.Controllers
         public IActionResult EditAccount(UserSignUpDataTransferObject newUser)
         {
             ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
             if (!ModelState.IsValid)
                 return View();
             if(_accountService.UpdateUser(newUser))
             {
-                ModelState.AddModelError(string.Empty, "Има проблем с личните данни!");
+                ModelState.AddModelError(string.Empty, "Има проблем с предоставените данни!");
                 return View();
             }
             TempData["Message"] = "Вашите промени са запазени.";
