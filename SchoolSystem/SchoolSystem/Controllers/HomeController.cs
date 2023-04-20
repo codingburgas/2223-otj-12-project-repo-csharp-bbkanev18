@@ -23,31 +23,6 @@ namespace SchoolSystem.Controllers
 
         public IActionResult Index()
         {
-            /*
-            var user1 = _schoolDBContext.Users.ToArray();
-            
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user1[0].FirstName),
-                new Claim(ClaimTypes.Role, "user")
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, "login");
-
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                IsPersistent = true
-            };
-
-            HttpContext.SignInAsync("login", new ClaimsPrincipal(claimsIdentity), authProperties).Wait();
-            await HttpContext.SignOutAsync();
-            */
-            //IEnumerable<User> user = await _schoolDBContext.Users.ToListAsync();
-            //HttpContext.SignOutAsync().Wait();
-
-            //var userId = User?.Identity?.Name ?? string.Empty;
-            //user = _authenticationService.GetUserById(userId);
             return View();
         }
 

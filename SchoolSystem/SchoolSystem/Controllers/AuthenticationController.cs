@@ -37,7 +37,7 @@ namespace SchoolSystem.Controllers
 
             if(claimsIdentity.Claims.Count() == 0)
             {
-                ModelState.AddModelError(string.Empty, "Invalid Email or Password");
+                ModelState.AddModelError(string.Empty, "Невалиден имейл или парола");
                 return View();
             }
 
@@ -69,7 +69,7 @@ namespace SchoolSystem.Controllers
 
             if (_authenticationService.SignUp(user))
             {
-                ModelState.AddModelError("Email", "This email already exist");
+                ModelState.AddModelError("Email", "Този имейл вече съществува.");
                 return View();
             }
 
