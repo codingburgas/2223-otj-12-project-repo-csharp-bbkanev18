@@ -43,7 +43,7 @@ namespace SchoolSystem.Controllers
 
             if (_courseService.CreateCourse(course))
             {
-                ModelState.AddModelError("Name", $"There are alraedy course name: {course.Name}");
+                ModelState.AddModelError("Name", $"Вече съществува курс с име: {course.Name}");
                 return View();
             }
 
@@ -66,7 +66,7 @@ namespace SchoolSystem.Controllers
                 return View();
             if (_courseService.EditCourse(course))
             {
-                ModelState.AddModelError(string.Empty, "There are error in syntax or this name is taken");
+                ModelState.AddModelError(string.Empty, "Има грешки в синтаксиса или това име е заето.");
                 return View();
             }
 
@@ -110,7 +110,7 @@ namespace SchoolSystem.Controllers
             if(_courseService.CreateSectionCourse(transferObject))
             {
                 var model = _courseService.GetCourseSection(transferObject.Id);
-                ModelState.AddModelError(string.Empty, "Error in creating section!");
+                ModelState.AddModelError(string.Empty, "Грешка при създаването на раздел!");
                 return View(model);
             }
 
@@ -137,7 +137,7 @@ namespace SchoolSystem.Controllers
             if (_courseService.UpdateSectionCourse(transferObject))
             {
                 var model = _courseService.GetCourseSection(transferObject.Id);
-                ModelState.AddModelError(string.Empty, "Error in creating section!");
+                ModelState.AddModelError(string.Empty, "Грешка при създаването на раздел!");
                 return View(model);
             }
 
@@ -160,13 +160,13 @@ namespace SchoolSystem.Controllers
             if (!ModelState.IsValid)
             {
                 var model = _courseService.GetTestAddInSectionTransferObject(transferObject.Id);
-                ModelState.AddModelError(string.Empty, "Error in data!");
+                ModelState.AddModelError(string.Empty, "Грешка в данните!");
                 return View(model);
             }
             if (_courseService.CreateTest(transferObject))
             {
                 var model = _courseService.GetTestAddInSectionTransferObject(transferObject.Id);
-                ModelState.AddModelError(string.Empty, "Error in creating test!");
+                ModelState.AddModelError(string.Empty, "Грешка при създаването на тест!");
                 return View(model);
             }
             return RedirectToAction("Index", "Course");
@@ -189,20 +189,20 @@ namespace SchoolSystem.Controllers
             if(transferObject?.File?.Length >= 5242880)
             {
                 var model = _courseService.GetFileAddInSection(transferObject.Id);
-                ModelState.AddModelError("File", "The maximum allowable size for an uploaded file is 5 MB.");
+                ModelState.AddModelError("File", "Максимално допустимият размер на качен файл е 5 MB.");
                 return View(model);
             }
             if (!ModelState.IsValid)
             {
                 var model = _courseService.GetFileAddInSection(transferObject?.Id);
-                ModelState.AddModelError(string.Empty, "Error in data!");
+                ModelState.AddModelError(string.Empty, "Грешка в данните!");
                 return View(model);
             }
 
             if (_courseService.CreateLesson(transferObject))
             {
                 var model = _courseService.GetFileAddInSection(transferObject?.Id);
-                ModelState.AddModelError(string.Empty, "Error in creating file!");
+                ModelState.AddModelError(string.Empty, "Грешка при създаването на файл!");
                 return View(model);
             }
 

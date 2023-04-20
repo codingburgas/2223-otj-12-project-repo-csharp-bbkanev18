@@ -4,13 +4,13 @@
     ViewData["Title"] = "Courses";
 }
 
-<h1>Courses</h1>
+<h1>Курсове</h1>
 <hr>
 
 @if (User.IsInRole("teacher") || User.IsInRole("admin"))
 {
     <a asp-controller="Course" asp-action="CreateCourse" class="bi bi-plus-circle-fill" style="font-size: 20px">
-        Create a new course
+        Създайте нов курс
     </a>
     <hr>
 }
@@ -23,7 +23,7 @@
                     <a asp-route-id="@course.Id" asp-action="CourseSection" style="text-align:right;">@course.Name</a>
             @if (User.IsInRole("teacher") || User.IsInRole("admin"))
             {
-                <a class="btn btn-success bi bi-pencil-square" asp-action="EditCourse" asp-route-id="@course.Id">Edit Course</a>
+                <a class="btn btn-success bi bi-pencil-square" asp-action="EditCourse" asp-route-id="@course.Id">Редактиране на курса</a>
             }
         </div>
         <br>
@@ -34,7 +34,7 @@ else
     <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
         <i class="bi-exclamation-triangle-fill" style="font-size: 5em;"></i>
         <div style="font-size:50px; margin-left: 20px">
-            There are no courses in database!
+            Няма курсове в базата данни!
         </div>
     </div>
 }

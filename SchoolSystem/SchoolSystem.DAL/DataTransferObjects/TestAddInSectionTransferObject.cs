@@ -17,9 +17,9 @@ namespace SchoolSystem.DAL.DataTransferObjects
         [MaxLength(250, ErrorMessage = "The test name cannot be more than 250 characters")]
         public string Name { get; set; } = string.Empty;
         [Display(Name = "Time limit")]
-        [Required(ErrorMessage = "Time limit is required.")]
-        [Range(1, 30, ErrorMessage = "The time must be between 1 and 30 minutes.")]
-        [RegularExpression("^[0-9]+$", ErrorMessage = "Time limit must be an integer value.")]
+        [Required(ErrorMessage = "Изисква се ограничение във времето")]
+        [Range(1, 30, ErrorMessage = "Времетраенето трябва да бъде между 1 и 30 минути")]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Времетраенето трябва да бъде цяло число")]
         public int TimeLimit { get; set; }
         public DateTime? Deadline { get; set; }
         public string SectionId { get; set; } = string.Empty;

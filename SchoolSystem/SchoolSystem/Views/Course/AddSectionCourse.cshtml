@@ -3,29 +3,29 @@
     ViewData["Title"] = "Add Section Course Page";
 }
 
-<h1>Update course</h1>
+<h1>Актуализирайте курса</h1>
 <hr>
 
 <form asp-action="AddSectionCourse">
     <div class="form-group">
-        <label asp-for="CourseName" class="control-label">Course name</label>
+        <label asp-for="CourseName" class="control-label">Името на курса</label>
         <input asp-for="CourseName" class="form-control" disabled/>
         <span asp-validation-for="CourseName" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
+        <label asp-for="Name" class="control-label">Име на раздела</label>
         <input asp-for="Name" class="form-control" required />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group" style="margin-top: 20px">
-        <input type="submit" value="Save changes" class="btn btn-primary" />
+        <input type="submit" value="Запазите промените" class="btn btn-primary" />
     </div>
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 </form>
 
 <div>
-    <a class="bi bi-arrow-bar-left" asp-route-id="@Model.CourseId" asp-action="CourseSection">Back to section course</a>
+    <a class="bi bi-arrow-bar-left" asp-route-id="@Model.CourseId" asp-action="CourseSection">Обратно към курса</a>
 </div>
 
 
