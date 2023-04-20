@@ -22,30 +22,30 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Начална страница</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Courses</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Курсове</a>
                         </li>
                         @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ManageUser" asp-action="Index">Manage Users</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ManageUser" asp-action="Index">Управление на потребителите</a>
                             </li>
                         }
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item ms-auto">
-                                <a class="btn nav-link" asp-area="" asp-controller="Account" asp-action="Index">My Account <span class="bi bi-person-circle"></span></a>
+                                <a class="btn nav-link" asp-area="" asp-controller="Account" asp-action="Index">Моята акаунта <span class="bi bi-person-circle"></span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-link" asp-area="" asp-controller="Authentication" asp-action="LogOut">(Logout)</a>
+                                <a class="btn btn-link" asp-area="" asp-controller="Authentication" asp-action="LogOut">(Излез от профила си)</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-primary nav-link" asp-area="" asp-controller="Authentication" asp-action="SignIn">Sign in</a>
+                                <a class="btn btn-primary nav-link" asp-area="" asp-controller="Authentication" asp-action="SignIn">Впиши се</a>
                             </li>
                         }
                     </ul>
@@ -61,7 +61,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - SchoolSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - SchoolSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Поверителност</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

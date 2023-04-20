@@ -5,32 +5,32 @@
 
 <div class="jumbotron">
     <div class="jumbotron">
-        <h1 class="display-4">Welcome to SchoolSystem!</h1>
+        <h1 class="display-4">Добре дошли в SchoolSystem!</h1>
         <hr class="my-4">
         <p class="lead">
-            SchoolSystem is an online learning platform designed to provide students, teachers, and lifelong learners with a flexible and accessible way to expand their knowledge and skills. With SchoolSystem, you can access a wide range of courses, lessons, assignments, and tests from anywhere in the world, at any time that suits you.
+            SchoolSystem е онлайн платформа за обучение, предназначена да предостави на ученици, учители и обучаващи се през целия живот гъвкав и достъпен начин да разширят своите знания и умения. С SchoolSystem можете да получите достъп до широк набор от курсове, уроци, задачи и тестове от всяка точка на света, по всяко време, което ви е удобно.
         </p>
         <p class="lead">
-            Our platform offers a variety of learning resources, including multimedia lectures, interactive quizzes, and practical assignments, to help you gain a deeper understanding of your chosen subjects. Whether you're looking to supplement your classroom learning, learn a new skill, or pursue a passion project, SchoolSystem offers a range of courses and resources to suit your needs.
+            Нашата платформа предлага разнообразие от учебни ресурси, включително мултимедийни лекции, интерактивни тестове и практически задачи, за да ви помогне да придобиете по-задълбочено разбиране на избраните от вас теми. Независимо дали искате да допълните обучението си в класната стая, да научите ново умение или да преследвате страстен проект, SchoolSystem предлага набор от курсове и ресурси, които да отговарят на вашите нужди.
         </p>
         <p class="lead">
-            As a student, you can enroll in courses, complete assignments, and take tests to earn grades and progress through your program of study. Teachers can create and manage courses, grade assignments and tests, and monitor the progress of their students. Lifelong learners can explore our library of courses and resources to pursue personal or professional development opportunities.
+            Като студент можете да се запишете в курсове, да изпълнявате задачи и да полагате тестове, за да печелите оценки и да напредвате в програмата си за обучение. Учителите могат да създават и управляват курсове, да оценяват задачи и тестове и да наблюдават напредъка на своите ученици. Учещите през целия живот могат да изследват нашата библиотека от курсове и ресурси, за да търсят възможности за лично или професионално развитие.
         </p>
         <p class="lead">
-            We believe that education should be accessible to everyone, regardless of their location, schedule, or financial circumstances. That's why we strive to make SchoolSystem an inclusive and affordable learning platform that can benefit anyone with a desire to learn and grow.
+            Вярваме, че образованието трябва да е достъпно за всеки, независимо от неговото местоположение, график или финансови обстоятелства. Ето защо се стремим да направим SchoolSystem приобщаваща и достъпна платформа за обучение, която може да бъде от полза за всеки с желание да учи и да расте.
         </p>
         <hr class="my-4">
     </div>
     @if (!User?.Identity?.IsAuthenticated == true)
     {
-        <p>To get started, register for an account.</p>
-        <a class="btn btn-primary btn-lg" asp-controller="Authentication" asp-action="SignUp">Register</a> 
-        <a class="btn btn-primary btn-lg" asp-controller="Authentication" asp-action="SignIn">Sign In</a>
+        <p>За да започнете, регистрирайте си акаунт.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Authentication" asp-action="SignUp">Регистрирам</a>
+        <a class="btn btn-primary btn-lg" asp-controller="Authentication" asp-action="SignIn">Впиши се</a>
     }
     else
     {
-        <p>To get started, browse our available courses.</p>
-        <a class="btn btn-primary btn-lg" asp-controller="Course" asp-action="Index">Courses</a>
+        <p>За да започнете, прегледайте нашите налични курсове.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Course" asp-action="Index">Курсове</a>
     }
 </div>
 
