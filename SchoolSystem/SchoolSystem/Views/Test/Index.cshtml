@@ -9,21 +9,21 @@
             <h1 class="text-center">@Model.TestName</h1>
             @if (Model.Deadline == null)
             {
-                <p class="text-center">This quiz do not have deadline</p>
+                <p class="text-center">Този тест няма краен срок</p>
             }
             else
             {
-                <p class="text-center">This quiz closed on @Model.Deadline</p>
+                <p class="text-center">Този тест се затваря на @Model.Deadline</p>
             }
-            <p class="text-center">Time limit: @Model.TimeLimit mins</p>
+            <p class="text-center">Времетраене на теста: @Model.TimeLimit mins</p>
             @if (Model.IsCurrentUserMakeTest)
             {
-                <p class="text-center">Your Score: @Model.UserScore%</p>
+                <p class="text-center">Твоят резултат: @Model.UserScore%</p>
             }
             else
             {
                 <div class="text-center">
-                    <a class="btn btn-secondary btn-block mx-auto">Attempt</a>
+                    <a class="btn btn-secondary btn-block mx-auto">Започни</a>
                 </div>
             }
         </div>
