@@ -49,10 +49,10 @@ namespace SchoolSystem.Controllers
                 return View();
             if(_accountService.UpdateUser(newUser))
             {
-                ModelState.AddModelError(string.Empty, "There's an issue with the private data!");
+                ModelState.AddModelError(string.Empty, "Има проблем с личните данни!");
                 return View();
             }
-            TempData["Message"] = "Your changes have been saved.";
+            TempData["Message"] = "Вашите промени са запазени.";
             return RedirectToAction("Index", "Account");
         }
 
@@ -78,10 +78,10 @@ namespace SchoolSystem.Controllers
 
             if (_accountService.UpdateUserPassword(newUser))
             {
-                ModelState.AddModelError(string.Empty, "Error: It is not possible to set your old password as the new password!");
+                ModelState.AddModelError(string.Empty, "Грешка: Не е възможно да зададете старата си парола като нова!");
                 return View();
             }
-            TempData["Message"] = "Your password has been changed successfully.";
+            TempData["Message"] = "Вашата парола е променена успешно.";
             return RedirectToAction("Index", "Account");
         }
     }

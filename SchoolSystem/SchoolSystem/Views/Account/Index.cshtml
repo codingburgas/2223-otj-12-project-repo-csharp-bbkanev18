@@ -5,7 +5,7 @@
 }
 
 <h1>
-    Hello, @Model.FirstName @Model.LastName
+    Здравейте, @Model.FirstName @Model.LastName
 </h1>
 
 <hr>
@@ -19,35 +19,35 @@
 }
 
 <div class="mb-3 row">
-    <label asp-for="FirstName" class="col-sm-2 col-form-label">Firstname:</label>
+    <label asp-for="FirstName" class="col-sm-2 col-form-label">Първо име:</label>
     <div class="col-sm-10">
         <input asp-for="FirstName" readonly class="form-control-plaintext" />
     </div>
 </div>
 
 <div class="mb-3 row">
-    <label asp-for="MiddleName" class="col-sm-2 col-form-label">Middlename:</label>
+    <label asp-for="MiddleName" class="col-sm-2 col-form-label">Презиме:</label>
     <div class="col-sm-10">
         <input asp-for="MiddleName" readonly class="form-control-plaintext" />
     </div>
 </div>
 
 <div class="mb-3 row">
-    <label asp-for="LastName" class="col-sm-2 col-form-label">Lastname:</label>
+    <label asp-for="LastName" class="col-sm-2 col-form-label">Фамилия:</label>
     <div class="col-sm-10">
         <input asp-for="LastName" readonly class="form-control-plaintext" />
     </div>
 </div>
 
 <div class="mb-3 row">
-    <label asp-for="Age" class="col-sm-2 col-form-label">Age:</label>
+    <label asp-for="Age" class="col-sm-2 col-form-label">Възраст:</label>
     <div class="col-sm-10">
         <input asp-for="Age" readonly class="form-control-plaintext" />
     </div>
 </div>
 
 <div class="mb-3 row">
-    <label asp-for="Email" class="col-sm-2 col-form-label">Email:</label>
+    <label asp-for="Email" class="col-sm-2 col-form-label">Електронна поща:</label>
     <div class="col-sm-10">
         <input asp-for="Email" readonly class="form-control-plaintext" />
     </div>
@@ -55,58 +55,58 @@
 
 
 <div class="mb-3 row">
-    <label asp-for="Address" class="col-sm-2 col-form-label">Address:</label>
+    <label asp-for="Address" class="col-sm-2 col-form-label">Адрес:</label>
     <div class="col-sm-10">
-        <input asp-for="Address" readonly class="form-control-plaintext" placeholder="No address provided" />
+        <input asp-for="Address" readonly class="form-control-plaintext" placeholder="Не е предоставен адрес" />
     </div>
 </div>
 
 <div class="mb-3 row">
-    <label asp-for="Phone" class="col-sm-2 col-form-label">Phone:</label>
+    <label asp-for="Phone" class="col-sm-2 col-form-label">Телефон:</label>
     <div class="col-sm-10">
-        <input asp-for="Phone" readonly class="form-control-plaintext" placeholder="No phone provided" />
+        <input asp-for="Phone" readonly class="form-control-plaintext" placeholder="Няма предоставен телефон" />
     </div>
 </div>
 
 @if (User.IsInRole("admin"))
 {
     <div class="mb-3 row">
-        <label for="staticRole" class="col-sm-2 col-form-label">Role:</label>
+        <label for="staticRole" class="col-sm-2 col-form-label">Роля:</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="admin">
+            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="администратор">
         </div>
     </div>
 }
 else if (User.IsInRole("teacher"))
 {
     <div class="mb-3 row">
-        <label for="staticRole" class="col-sm-2 col-form-label">Role:</label>
+        <label for="staticRole" class="col-sm-2 col-form-label">Роля:</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="teacher">
+            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="учител">
         </div>
     </div>
 }
 else if (User.IsInRole("user"))
 {
     <div class="mb-3 row">
-        <label for="staticRole" class="col-sm-2 col-form-label">Role:</label>
+        <label for="staticRole" class="col-sm-2 col-form-label">Роля:</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="user">
+            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="потребител">
         </div>
     </div>
 }
 else
 {
     <div class="mb-3 row">
-        <label for="staticRole" class="col-sm-2 col-form-label">Role:</label>
+        <label for="staticRole" class="col-sm-2 col-form-label">Роля:</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="guest">
+            <input type="text" readonly class="form-control-plaintext" id="staticRole" value="гост">
         </div>
     </div>
 }
 
-<a class="btn btn-success bi bi-pencil-square" asp-action="EditAccount" asp-route-id="@Model.Id"> Edit My Account</a> |
-<a class="btn btn-primary bi bi-pencil-square" asp-action="ChangePassword" asp-route-id="@Model.Id"> Reset Password</a>
+<a class="btn btn-success bi bi-pencil-square" asp-action="EditAccount" asp-route-id="@Model.Id"> Редактиране на моя акаунт</a> |
+<a class="btn btn-primary bi bi-pencil-square" asp-action="ChangePassword" asp-route-id="@Model.Id"> Нулиране на парола</a>
 
 @section Scripts {
     @{
