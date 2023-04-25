@@ -20,8 +20,10 @@ namespace SchoolSystem.BLL.Services
 
         public TestAttemptTransferObject GetCurrentTest(string? testId, string? currentUserId)
         {
-            var test = _schoolDBContext.Tests.Include(cs => cs.CourseSections).Where(t => t.Id == testId).FirstOrDefault();
-            var currentUser = _schoolDBContext.Users.Include(ut => ut.UsersTests).Where(cu => cu.Id == currentUserId).FirstOrDefault();
+            var test = _schoolDBContext.Tests.Include(cs => cs.CourseSections)
+                .Where(t => t.Id == testId).FirstOrDefault();
+            var currentUser = _schoolDBContext.Users.Include(ut => ut.UsersTests)
+                .Where(cu => cu.Id == currentUserId).FirstOrDefault();
             var courseId = string.Empty;
             var isCurrentUserMakeTest = false;
             var userScore = 0;

@@ -29,7 +29,7 @@ namespace SchoolSystem.BLL.Services
 
             _schoolDBContext.Add(tempCourse);
             _schoolDBContext.SaveChanges();
-            if (course?.SectionName?.Count()>0)
+            if (course?.SectionName?.Count() > 0)
             {
                 var courseId = GetCourseId(course);
                 foreach (var sectionName in course.SectionName)
@@ -65,7 +65,7 @@ namespace SchoolSystem.BLL.Services
             var courses = _schoolDBContext.Courses;
             foreach (var item in courses)
             {
-                if(item.Name == course.Name)
+                if (item.Name == course.Name)
                     return true;
             }
             return false;
@@ -91,7 +91,7 @@ namespace SchoolSystem.BLL.Services
         {
             if (CheckCourseName(course))
                 return true;
-            if (course.Name.Length<2 || course.Name.Length>250)
+            if (course.Name.Length < 2 || course.Name.Length > 250)
                 return true;
 
             return false;
@@ -104,11 +104,27 @@ namespace SchoolSystem.BLL.Services
 
         public void AttachCourse(Course course)
         {
-            _schoolDBContext.Entry(course).State|= EntityState.Modified;
+            _schoolDBContext.Entry(course).State |= EntityState.Modified;
         }
 
-        public List<CourseSectionTransferObject> GetCourseSections(string? courseId)
+        public List<CourseSectionTransferObject> GetCourseSections(string? courseId, string? currentUserId)
         {
+            var currentUser = _schoolDBContext.Users
+                .Include(c => c.Courses)
+                .Where(users => users.Id == currentUserId)
+                .First();
+
+            var counter = 0;
+
+            foreach (var signInCourse in currentUser.Courses)
+                if (signInCourse.Id == courseId)
+                    counter++;
+
+            if (counter == 0)
+                return new List<CourseSectionTransferObject>();
+
+
+
             var temp = new List<CourseSectionTransferObject>();
             var TransferObject = new CourseSectionTransferObject();
             //var test = _schoolDBContext.CoursesSections.Include(t => t.Tests).ToList();
@@ -120,11 +136,11 @@ namespace SchoolSystem.BLL.Services
             test?.CourseSections.Add(book);
             _schoolDBContext.SaveChanges();
             */
-            var courseSections = _schoolDBContext.CoursesSections.Include(t => t.Tests).Include(f=>f.Files).ToList();
+            var courseSections = _schoolDBContext.CoursesSections.Include(t => t.Tests).Include(f => f.Files).ToList();
             var course = _schoolDBContext.Courses.Find(courseId);
             foreach (var section in courseSections)
-            { 
-                if(section.CourseId == courseId)
+            {
+                if (section.CourseId == courseId)
                 {
                     TransferObject = new CourseSectionTransferObject()
                     {
@@ -145,8 +161,8 @@ namespace SchoolSystem.BLL.Services
                 }
             }
 
-            if(temp.Count == 0)
-                temp.Add(new CourseSectionTransferObject { CourseId = course?.Id ?? string.Empty,CourseName = course?.Name ?? string.Empty });
+            if (temp.Count == 0)
+                temp.Add(new CourseSectionTransferObject { CourseId = course?.Id ?? string.Empty, CourseName = course?.Name ?? string.Empty });
 
             return temp;
         }
@@ -170,7 +186,7 @@ namespace SchoolSystem.BLL.Services
 
             newCourseSectio.Name = transferObject.Name;
             newCourseSectio.CourseId = transferObject.Id;
-            
+
             _schoolDBContext.Add(newCourseSectio);
             _schoolDBContext.SaveChanges();
             return false;
@@ -211,8 +227,8 @@ namespace SchoolSystem.BLL.Services
 
         public bool CreateTest(TestAddInSectionTransferObject transferObject)
         {
-            var section  = _schoolDBContext.CoursesSections.Find(transferObject?.Id);
-            if(section== null) 
+            var section = _schoolDBContext.CoursesSections.Find(transferObject?.Id);
+            if (section == null)
                 return true;
 
             var newTest = new Test();
@@ -247,7 +263,7 @@ namespace SchoolSystem.BLL.Services
         public bool CreateLesson(FileAddInSectionTransferObject? transferObject)
         {
             var section = _schoolDBContext.CoursesSections.Find(transferObject?.Id);
-            if(section== null) 
+            if (section == null)
                 return true;
 
             var newFile = new DAL.Models.File();
@@ -268,9 +284,92 @@ namespace SchoolSystem.BLL.Services
             newFile.CourseSections.Add(section);
 
             _schoolDBContext.SaveChanges();
-            
+
             return false;
 
+        }
+
+        public bool AddUserInCourse(string courseId, string userId)
+        {
+            var user = _schoolDBContext.Users.Include(c => c.Courses)
+                .Where(users => users.Id == userId).FirstOrDefault();
+            if (CheckUserCourse(courseId, user ?? new User()))
+                return true;
+            var course = _schoolDBContext.Courses.Include(u => u.Users)
+                .Where(courses => courses.Id == courseId).FirstOrDefault();
+
+            user?.Courses.Add(course ?? new Course());
+            course?.Users.Add(user ?? new User());
+            _schoolDBContext.SaveChanges();
+            return false;
+
+        }
+
+        private bool CheckUserCourse(string courseId, User user)
+        {
+            foreach (var course in user.Courses)
+            {
+                if (course.Id == courseId)
+                    return true;
+            }
+            return false;
+        }
+
+        public List<Course> GetCoursesUser(string? userId)
+        {
+            if (userId == null)
+                return new List<Course>();
+
+            var courses = new List<Course>();
+            var user = _schoolDBContext.Users.Include(c => c.Courses)
+                .Where(users => users.Id == userId).First();
+
+            var role = _schoolDBContext.Roles.Find(user.RoleId);
+
+            if (role?.Name == "admin" || role?.Name == "teacher")
+                return _schoolDBContext.Courses.ToList();
+
+
+            foreach (var course in user.Courses)
+            {
+                if (course == null)
+                    break;
+                courses.Add(course);
+            }
+
+            return courses;
+        }
+
+        public AddUserInCourseTransferObject GetAddUserInCourse(string? courseId)
+        {
+            if (courseId == null)
+                return new AddUserInCourseTransferObject();
+
+
+            var course = _schoolDBContext.Courses.Find(courseId);
+            var users = _schoolDBContext.Users.Include(c => c.Courses).ToList();
+            var notSignInUsers = _schoolDBContext.Users.Include(c => c.Courses).ToList();
+
+
+
+            foreach (var user in users)
+            {
+                var role = _schoolDBContext.Roles.Find(user.RoleId);
+
+                if (role?.Name == "admin" || role?.Name == "teacher")
+                    notSignInUsers.Remove(user);
+
+                foreach (var userCourse in user.Courses)
+                {
+                    if (userCourse.Id == courseId)
+                        notSignInUsers.Remove(user);
+                }
+            }
+            return new AddUserInCourseTransferObject()
+            {
+                Course = course ?? new Course(),
+                Users = notSignInUsers
+            };
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.AddUserInCourseTransferObject
+@{
+    ViewData["Title"] = "Add User in Course Page";
+}
+
+<h1>Добавяне на потребител в курс</h1>
+<hr>
+
+<form method="post" asp-action="AddUserInCourse">
+    <div class="form-group">
+        <label asp-for="Course.Name" class="control-label">Името на курса</label>
+        <input asp-for="Course.Name" class="form-control" disabled />
+        <span asp-validation-for="Course.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="users">Избери потребител:</label>
+        <select name="userId" class="form-control" required>
+            <option value="">Изберете потребител</option>
+            @foreach (var user in Model.Users)
+            {
+                <option value="@user.Id">@user.Email</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group" style="margin-top: 20px">
+        <input type="submit" value="Запазите промените" class="btn btn-primary" />
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-action="Index">Обратно към курсовете</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

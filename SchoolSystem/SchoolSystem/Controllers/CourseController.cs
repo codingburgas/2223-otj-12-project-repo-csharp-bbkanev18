@@ -18,10 +18,10 @@ namespace SchoolSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var courses = await _schoolDBContext.Courses.ToListAsync();
-            return View(courses);
+            var model = _courseService.GetCoursesUser(User?.Identity?.Name);
+            return View(model);
         }
 
         [HttpGet]
@@ -86,7 +86,9 @@ namespace SchoolSystem.Controllers
         [Authorize(Roles ="user,admin,teacher")]
         public IActionResult CourseSection(string? id)
         {
-            var model = _courseService.GetCourseSections(id);
+            var model = _courseService.GetCourseSections(id, User?.Identity?.Name ?? string.Empty);
+            if(model.Count == 0)
+                return Redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
             return View(model);
         }
 
@@ -206,6 +208,34 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
 
+            return RedirectToAction("Index", "Course");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, teacher")]
+        public IActionResult AddUserInCourse(string? id)
+        {
+            var model = _courseService.GetAddUserInCourse(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="admin, teacher")]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddUserInCourse(string? id, string? userId)
+        {
+            if(_courseService.AddUserInCourse(id ?? string.Empty, userId ?? string.Empty))
+            {
+                var course = _courseService.GetCourseById(id);
+                var users = _schoolDBContext.Users.ToList();
+                var model = new AddUserInCourseTransferObject
+                {
+                    Course = course ?? new Course(),
+                    Users = users
+                };
+                ModelState.AddModelError(string.Empty, "Този потребител вече е курса!");
+                return View(model);
+            }
             return RedirectToAction("Index", "Course");
         }
     }

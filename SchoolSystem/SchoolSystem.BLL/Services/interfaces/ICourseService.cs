@@ -21,7 +21,7 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public void AttachCourse(Course course);
 
-        public List<CourseSectionTransferObject> GetCourseSections(string? courseId);
+        public List<CourseSectionTransferObject> GetCourseSections(string? courseId, string? currentUserId);
         public CourseSectionTransferObject GetCourseSection(string? courseId);
 
         public CourseSectionTransferObject GetSection(string? sectionId);
@@ -30,6 +30,10 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public FileAddInSectionTransferObject GetFileAddInSection(string? sectionId);
 
+        public List<Course> GetCoursesUser(string? userId);
+
+        public AddUserInCourseTransferObject GetAddUserInCourse(string? courseId);
+
         public bool CreateTest(TestAddInSectionTransferObject transferObject);
 
         public bool CreateLesson(FileAddInSectionTransferObject? transferObject);
@@ -37,6 +41,8 @@ namespace SchoolSystem.BLL.Services.interfaces
         public bool CreateSectionCourse(CourseSectionTransferObject transferObject);
 
         public bool UpdateSectionCourse(CourseSectionTransferObject transferObject);
+
+        public bool AddUserInCourse(string courseId, string userId);
 
         
     }
