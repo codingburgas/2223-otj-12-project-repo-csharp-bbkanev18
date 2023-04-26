@@ -36,7 +36,7 @@ namespace SchoolSystem.Controllers
             if (currentUser == null)
                 return NotFound();
             if(currentUser.Id != id)
-                return Redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                return Redirect("https://http.cat/401");
             return View(currentUser);
         }
 
@@ -65,7 +65,7 @@ namespace SchoolSystem.Controllers
             if (currentUser == null)
                 return NotFound();
             if (currentUser.Id != id)
-                return Redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                return Redirect("https://http.cat/401");
             return View(currentUser);
         }
 

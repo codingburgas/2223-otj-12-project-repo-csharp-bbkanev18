@@ -28,7 +28,6 @@ namespace SchoolSystem.Controllers
         [Authorize(Roles = "admin, teacher")]
         public IActionResult CreateCourse()
         {
-
             return View();
         }
 
@@ -46,7 +45,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError("Name", $"Вече съществува курс с име: {course.Name}");
                 return View();
             }
-
+            TempData["Message"] = $"Курса с име: '{course.Name}' е създаден успешно.";
             return RedirectToAction("Index", "Course");
         }
 
@@ -79,6 +78,8 @@ namespace SchoolSystem.Controllers
             _schoolDBContext.Update(course);
             _schoolDBContext.SaveChanges();
 
+            TempData["Message"] = $"Промените по Курса с име: '{course.Name}' са успешни.";
+
             return RedirectToAction("Index", "Course");
         }
 
@@ -88,7 +89,7 @@ namespace SchoolSystem.Controllers
         {
             var model = _courseService.GetCourseSections(id, User?.Identity?.Name ?? string.Empty);
             if(model.Count == 0)
-                return Redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                return Redirect("https://http.cat/401");
             return View(model);
         }
 
@@ -115,6 +116,8 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Грешка при създаването на раздел!");
                 return View(model);
             }
+
+            TempData["Message"] = $"Усшесно създаден раздел с име: '{transferObject.Name}'.";
 
             return RedirectToAction("Index", "Course");
         }
@@ -143,6 +146,7 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
 
+            TempData["Message"] = $"Усшесна промяна на името на раздел: '{transferObject.Name}'";
             return RedirectToAction("Index", "Course");
         }
 
@@ -171,6 +175,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Грешка при създаването на тест!");
                 return View(model);
             }
+            TempData["Message"] = $"Усшесно създаден тест.";
             return RedirectToAction("Index", "Course");
         }
 
@@ -208,6 +213,7 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
 
+            TempData["Message"] = $"Усшесно създаден урок.";
             return RedirectToAction("Index", "Course");
         }
 
@@ -236,6 +242,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Този потребител вече е курса!");
                 return View(model);
             }
+            TempData["Message"] = $"Усшесно добавен потребител в курса.";
             return RedirectToAction("Index", "Course");
         }
 
@@ -245,6 +252,19 @@ namespace SchoolSystem.Controllers
         {
             var model = _courseService.GetSignInUsers(id);
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,teacher")]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveUserFromCourse(string? courseId, string? userId)
+        {
+            if(_courseService.DeleteUserInCourse(userId, courseId))
+            {
+                return Redirect("https://http.cat/409");
+            }
+            TempData["Message"] = $"Усшесно изтрит потребител от курса.";
+            return RedirectToAction("Index", "Course");
         }
     }
 }

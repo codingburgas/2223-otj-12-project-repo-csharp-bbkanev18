@@ -16,42 +16,57 @@
 
 <h1>Всички добени потребители</h1>
 <hr>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Електронна поща
-            </th>
-            <th>
-                Първо име
-            </th>
-            <th>
-                Фамилия
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
+@if (Model.Users.Count != 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @user.Email
-                </td>
-                <td>
-                    @user.FirstName
-                </td>
-                <td>
-                    @user.LastName
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@user.Id">Премахване</a>
-                </td>
+                <th>
+                    Електронна поща
+                </th>
+                <th>
+                    Първо име
+                </th>
+                <th>
+                    Фамилия
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>
+                        @user.Email
+                    </td>
+                    <td>
+                        @user.FirstName
+                    </td>
+                    <td>
+                        @user.LastName
+                    </td>
+                    <td>
+                        <form asp-action="RemoveUserFromCourse">
+                            <input type="hidden" name="courseId" value="@Model.Course.Id" />
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <input type="submit" value="Премахване" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
+        <i class="bi-exclamation-triangle-fill" style="font-size: 5em;"></i>
+        <div style="font-size:50px; margin-left: 20px">
+            Няма добавени потребители курса!
+        </div>
+    </div>
+}
 
 <div>
     <a class="bi bi-arrow-bar-left" asp-action="Index">Обратно към курсовете</a>

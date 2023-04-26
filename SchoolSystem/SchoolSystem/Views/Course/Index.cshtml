@@ -7,6 +7,14 @@
 <h1>Курсове</h1>
 <hr>
 
+@if (TempData.ContainsKey("Message") && TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 @if (User.IsInRole("teacher") || User.IsInRole("admin"))
 {
     <a asp-controller="Course" asp-action="CreateCourse" class="bi bi-plus-circle-fill" style="font-size: 20px">
@@ -26,7 +34,7 @@
                 <div style="display: flex; align-items: center;">
                     <a class="btn btn-success bi bi-pencil-square" asp-action="EditCourse" asp-route-id="@course.Id">Редактиране на курса</a>
                     <div style="width: 10px;"></div> <!-- Creates space between buttons -->
-                    <a class="btn btn-success bi bi-pencil-square" asp-action="UsersInCourse" asp-route-id="@course.Id">Потребители</a>
+                    <a class="btn btn-primary bi bi-pencil-square" asp-action="UsersInCourse" asp-route-id="@course.Id">Потребители</a>
                 </div>
             }
         </div>

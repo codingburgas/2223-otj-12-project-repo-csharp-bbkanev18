@@ -396,5 +396,28 @@ namespace SchoolSystem.BLL.Services
                 Users = users
             };
         }
+
+        public bool DeleteUserInCourse(string? userId, string? courseId)
+        {
+            if (userId == null || courseId == null)
+                return true;
+
+            var user = _schoolDBContext.Users
+                .Include(u => u.Courses)
+                .Where(users => users.Id == userId)
+                .First();
+
+            foreach (var courses in user.Courses)
+            {
+                if (courses.Id == courseId)
+                {
+                    user.Courses.Remove(courses);
+                    break;
+                }
+            }
+
+            _schoolDBContext.SaveChanges();
+            return false;
+        }
     }
 }

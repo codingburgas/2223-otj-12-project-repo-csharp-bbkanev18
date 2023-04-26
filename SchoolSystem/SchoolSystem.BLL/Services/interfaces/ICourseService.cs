@@ -46,6 +46,8 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public bool AddUserInCourse(string courseId, string userId);
 
+        public bool DeleteUserInCourse(string? userId, string? courseId);
+
         
     }
 }
