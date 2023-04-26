@@ -116,14 +116,18 @@ namespace SchoolSystem.BLL.Services
 
             var counter = 0;
 
-            foreach (var signInCourse in currentUser.Courses)
-                if (signInCourse.Id == courseId)
-                    counter++;
+            var currentRole = _schoolDBContext.Roles.Where(roles => roles.Id == currentUser.RoleId).First();
 
-            if (counter == 0)
-                return new List<CourseSectionTransferObject>();
+            if(currentRole.Name == "admin" || currentRole.Name == "teacher") { }
+            else
+            {
+                foreach (var signInCourse in currentUser.Courses)
+                    if (signInCourse.Id == courseId)
+                        counter++;
 
-
+                if (counter == 0)
+                    return new List<CourseSectionTransferObject>();
+            }
 
             var temp = new List<CourseSectionTransferObject>();
             var TransferObject = new CourseSectionTransferObject();
@@ -369,6 +373,27 @@ namespace SchoolSystem.BLL.Services
             {
                 Course = course ?? new Course(),
                 Users = notSignInUsers
+            };
+        }
+
+        public AddUserInCourseTransferObject GetSignInUsers(string? courseId)
+        {
+            var course = _schoolDBContext.Courses
+                .Include(u => u.Users)
+                .Where(courses => courses.Id == courseId)
+                .First();
+
+            var users = new List<User>();
+
+            foreach(var user in course.Users)
+            {
+                users.Add(user);
+            }
+
+            return new AddUserInCourseTransferObject
+            {
+                Course = course,
+                Users = users
             };
         }
     }

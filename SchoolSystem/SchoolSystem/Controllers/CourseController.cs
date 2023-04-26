@@ -238,5 +238,13 @@ namespace SchoolSystem.Controllers
             }
             return RedirectToAction("Index", "Course");
         }
+
+        [HttpGet]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult UsersInCourse(string? id)
+        {
+            var model = _courseService.GetSignInUsers(id);
+            return View(model);
+        }
     }
 }

@@ -34,6 +34,8 @@ namespace SchoolSystem.BLL.Services.interfaces
 
         public AddUserInCourseTransferObject GetAddUserInCourse(string? courseId);
 
+        public AddUserInCourseTransferObject GetSignInUsers(string? courseId);
+
         public bool CreateTest(TestAddInSectionTransferObject transferObject);
 
         public bool CreateLesson(FileAddInSectionTransferObject? transferObject);
