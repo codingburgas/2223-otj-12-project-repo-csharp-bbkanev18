@@ -17,6 +17,7 @@ namespace SchoolSystem.BLL.Services.interfaces
         public QuestionInTestTransferObject GetQuestionInTest(string? testId);
         public CreateQuestionTransferObject GetCreateQuestion(string? testId);
         public bool CreateQuestion(string? testId, CreateQuestionTransferObject transferObject);
+        public bool DeleteQuestion(string? testId, string? questionId);
 
     }
 }

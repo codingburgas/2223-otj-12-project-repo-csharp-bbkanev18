@@ -75,7 +75,27 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Грешка в данните!");
                 return View(model);
             }
+            TempData["Message"] = $"Усшесно добавен въпрос.";
             return RedirectToAction("Question", new { id = testId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult RemoveQuestion(string? id, string? questionId)
+        {
+            if(_testService.DeleteQuestion(id, questionId))
+            {
+                return Redirect("https://http.cat/404");
+            }
+            TempData["Message"] = $"Усшесно премахнат въпрос.";
+            return RedirectToAction("Question", new { id = id });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult DetailsQuestion(string? id)
+        {
+            return View();
         }
     }
 }

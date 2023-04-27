@@ -4,6 +4,7 @@ using SchoolSystem.DAL.DataTransferObjects;
 using SchoolSystem.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -183,5 +184,52 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.Add(questionAnswer);
             _schoolDBContext.SaveChanges();
         }
+
+        public bool DeleteQuestion(string? testId, string? questionId)
+        {
+           var question = _schoolDBContext.Questions
+                .Include(qa => qa.QuestionsAnswers)
+                .Include(t => t.Tests)
+                .Where(questions => questions.Id == questionId)
+                .First();
+
+            var currentTest = _schoolDBContext.Tests.Find(testId);
+
+            if (question == null || currentTest == null)
+                return true;
+            
+            question.Tests.Remove(currentTest);
+
+            var answers = new List<string>();
+            foreach (var questionAnswer in question.QuestionsAnswers)
+            {
+                answers.Add(questionAnswer.AnswerId.ToString());
+                _schoolDBContext.Remove(questionAnswer);
+            }
+
+            foreach (var answer in answers)
+            {
+                if (DeleteAnswer(answer))
+                    return true;
+            }
+
+
+            _schoolDBContext.Remove(question);
+            _schoolDBContext.SaveChanges();
+
+            return false;
+
+        }
+
+        private bool DeleteAnswer(string? answerId)
+        {
+            var answer = _schoolDBContext.Answers.Find(answerId);
+            if (answer == null) 
+                return true;
+            _schoolDBContext.Remove(answer);
+            return false;
+        }
+
+       
     }
 }

@@ -246,6 +246,8 @@ insert into Users (FirstName, MiddleName, LastName, Age, Email, [Password], [Add
 insert into Users (FirstName, MiddleName, LastName, Age, Email, [Password], [Address], RoleId) values ('Xever', 'Cactaceae', 'Grigson', 29, 'xgrigson2r@illinois.edu', '548118fdf069a44b8296b9ad1cd50a52cea2ce028d72ef71099375e5a5e014ee', '3813 Fisk Alley', (SELECT Id FROM Roles WHERE [Name] = 'guest'));
 
 
+
+
 -- Example how to insert a data into a QuestionsAnswers table
 /*
 INSERT INTO Questions([Name], [Points])
@@ -271,4 +273,6 @@ GO
 ALTER DATABASE SchoolDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 GO
 DROP DATABASE SchoolDB
+
+DELETE FROM Tests
 */
