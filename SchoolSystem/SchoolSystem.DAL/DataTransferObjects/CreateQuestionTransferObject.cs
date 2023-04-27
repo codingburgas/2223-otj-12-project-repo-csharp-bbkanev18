@@ -25,10 +25,11 @@ namespace SchoolSystem.DAL.DataTransferObjects
 
 
         [Required(ErrorMessage = "Изисква се верен отговор")]
-        [MinLength(2, ErrorMessage = "Отговора трябва да е поне 2 знака")]
         [MaxLength(250, ErrorMessage = "Отговора на въпроса не може да бъде повече от 1000 знака")]
         public string CorrectAnswer { get; set; } = string.Empty;
         
         public List<string>? Answers { get; set; } = null;
+
+        public string? QuestionId { get; set; } = string.Empty;
     }
 }

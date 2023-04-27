@@ -93,9 +93,10 @@ namespace SchoolSystem.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin,teacher")]
-        public IActionResult DetailsQuestion(string? id)
+        public IActionResult DetailsQuestion(string? id, string? questionId)
         {
-            return View();
+            var model = _testService.GetCreateQuestion(id, questionId);
+            return View(model);
         }
     }
 }

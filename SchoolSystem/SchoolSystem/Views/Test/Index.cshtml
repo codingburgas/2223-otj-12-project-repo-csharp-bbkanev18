@@ -40,9 +40,26 @@
                 }
                 else
                 {
-                    <div class="text-center">
-                        <a class="btn btn-secondary btn-block mx-auto">Започни</a>
-                    </div>
+                    if (Model.Deadline?.CompareTo(DateTime.Now) < 0)
+                    {
+                        if (User.IsInRole("admin") || User.IsInRole("teacher"))
+                        {
+                            <div class="text-center">
+                                <a class="btn btn-secondary btn-block mx-auto">Започни</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-center text-danger"> <i class="bi bi-exclamation-octagon"></i> Теста е затоворен <i class="bi bi-exclamation-octagon"></i></p>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-secondary btn-block mx-auto">Започни</a>
+                        </div>
+                    }
+
                 }
             }
         </div>

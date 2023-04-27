@@ -52,10 +52,9 @@
                     </td>
                     <td>
                         <form>
+                            <input type="hidden" name="questionId" value="@question.Id" />
                             <input type="submit" formmethod="get" value="Редактиране" class="btn btn-success" /> |
                             <input type="submit" formmethod="get" asp-action="DetailsQuestion" asp-route-id="@Model.Test.Id" value="Детайли" class="btn btn-primary" /> |
-
-                            <input type="hidden" name="questionId" value="@question.Id" />
                             <input type="submit" formmethod="post" asp-action="RemoveQuestion" asp-route-id="@Model.Test.Id" value="Премахване" class="btn btn-danger" />
                         </form>
                     </td>
@@ -74,6 +73,10 @@ else
         </div>
     </div>
 }
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-route-id="@Model.Test.Id" asp-action="Index">Обратно към теста</a>
+</div>
 
 
 @section Scripts {

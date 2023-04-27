@@ -230,6 +230,44 @@ namespace SchoolSystem.BLL.Services
             return false;
         }
 
-       
+        private string GetAnswerName(string? answerId)
+        {
+            var answer = _schoolDBContext.Answers.Find(answerId);
+            if (answer == null)
+                return string.Empty;
+            return answer.Name;
+        }
+
+        public CreateQuestionTransferObject GetCreateQuestion(string? testId, string? questionId)
+        {
+            var currentTest = _schoolDBContext.Tests.Find(testId);
+            var currentQuestion = _schoolDBContext.Questions
+                .Include(qa => qa.QuestionsAnswers)
+                .Where(questions => questions.Id == questionId)
+                .First();
+            if (currentTest == null || currentQuestion == null)
+                throw new NullReferenceException();
+
+            var questionAnswer = new List<string>();
+            var correctAnser = string.Empty;
+
+            foreach (var answers in currentQuestion.QuestionsAnswers)
+            {
+                if (answers.IsCorrect)
+                    correctAnser = GetAnswerName(answers.AnswerId);
+                else
+                    questionAnswer.Add(GetAnswerName(answers.AnswerId));
+            }
+
+            return new CreateQuestionTransferObject
+            {
+                Test = currentTest,
+                QuestionName = currentQuestion.Name,
+                Points = currentQuestion.Points,
+                CorrectAnswer = correctAnser,
+                Answers = questionAnswer,
+                QuestionId = questionId
+            };
+        }
     }
 }
