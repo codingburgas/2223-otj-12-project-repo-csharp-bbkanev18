@@ -47,5 +47,35 @@ namespace SchoolSystem.Controllers
             TempData["Message"] = $"Усшесно редактиране на теста.";
             return RedirectToAction("Index", new { id = transferObject.Id });
         }
+
+
+        [HttpGet]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult Question(string? id)
+        {
+            var model = _testService.GetQuestionInTest(id);
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult AddQuestion(string? id)
+        {
+            var model = _testService.GetCreateQuestion(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult AddQuestion(string? testId,CreateQuestionTransferObject transferObject)
+        {
+            if(_testService.CreateQuestion(testId, transferObject))
+            {
+                var model = _testService.GetCreateQuestion(testId);
+                ModelState.AddModelError(string.Empty, "Грешка в данните!");
+                return View(model);
+            }
+            return RedirectToAction("Question", new { id = testId });
+        }
     }
 }

@@ -3,6 +3,15 @@
     ViewData["Title"] = "Users in Course Page";
 }
 
+@if (TempData.ContainsKey("Message") && TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
 <h1>Име на курса: @Model.Course.Name</h1>
 <hr>
 
@@ -15,7 +24,7 @@
 }
 
 <h1>Всички добени потребители</h1>
-<hr>
+<br>
 @if (Model.Users.Count != 0)
 {
     <table class="table">

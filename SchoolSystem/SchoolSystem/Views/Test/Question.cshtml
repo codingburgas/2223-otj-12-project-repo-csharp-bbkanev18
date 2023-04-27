@@ -1,0 +1,74 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.QuestionInTestTransferObject
+@{
+    ViewData["Title"] = "Question Page";
+}
+
+<h1>Името на теста: </h1>
+
+<hr>
+<a asp-action="AddQuestion" asp-route-id="@Model.Test.Id" class="bi bi-plus-circle-fill" style="font-size: 20px">
+    Добавяне на въпрос
+</a>
+<hr>
+
+<h1>Всички добавени въпроси</h1>
+<br />
+
+@if (Model.Questions.Count != 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Въпрос
+                </th>
+                <th>
+                    Точки
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model.Questions)
+            {
+                <tr>
+                    <td>
+                        @question.Name
+                    </td>
+                    <td>
+                        @question.Points
+                    </td>
+                    <td>
+
+                        <input type="submit" value="Редактиране" class="btn btn-success" /> |
+                        <input type="submit" value="Детайли" class="btn btn-primary" /> |
+                        <input type="submit" value="Премахване" class="btn btn-danger" />
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
+        <i class="bi-exclamation-triangle-fill" style="font-size: 5em;"></i>
+        <div style="font-size:50px; margin-left: 20px">
+            Няма добавени потребители курса!
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -243,7 +243,7 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
             TempData["Message"] = $"Усшесно добавен потребител в курса.";
-            return RedirectToAction("Index", "Course");
+            return RedirectToAction("UsersInCourse", new { id = id });
         }
 
         [HttpGet]
@@ -264,7 +264,7 @@ namespace SchoolSystem.Controllers
                 return Redirect("https://http.cat/409");
             }
             TempData["Message"] = $"Усшесно изтрит потребител от курса.";
-            return RedirectToAction("Index", "Course");
+            return RedirectToAction("UsersInCourse", new { id = courseId });
         }
     }
 }
