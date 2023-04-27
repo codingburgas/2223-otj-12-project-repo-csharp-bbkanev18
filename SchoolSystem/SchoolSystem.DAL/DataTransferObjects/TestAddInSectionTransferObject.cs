@@ -12,9 +12,9 @@ namespace SchoolSystem.DAL.DataTransferObjects
     {
         public string Id { get; set; } = string.Empty;
         [Display(Name = "Test name")]
-        [Required(ErrorMessage = "Test name is required.")]
-        [MinLength(2, ErrorMessage = "The test name must be at least 2 characters")]
-        [MaxLength(250, ErrorMessage = "The test name cannot be more than 250 characters")]
+        [Required(ErrorMessage = "Изисква се име на теста.")]
+        [MinLength(2, ErrorMessage = "Името на теста трябва да съдържа поне 2 знака")]
+        [MaxLength(250, ErrorMessage = "Името на теста не може да бъде повече от 250 знака")]
         public string Name { get; set; } = string.Empty;
         [Display(Name = "Time limit")]
         [Required(ErrorMessage = "Изисква се ограничение във времето")]

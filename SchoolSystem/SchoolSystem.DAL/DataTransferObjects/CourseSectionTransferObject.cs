@@ -13,6 +13,7 @@ namespace SchoolSystem.DAL.DataTransferObjects
     {
         public string Id { get; set; } = string.Empty;
         [Display(Name = "SectionName")]
+        [Required(ErrorMessage = "Името на раздела е задължително")]
         [MinLength(2, ErrorMessage = "Името на раздела трябва да е поне 2 знака")]
         [MaxLength(250, ErrorMessage = "Името на раздела не може да бъде повече от 250 знака")]
         public string Name { get; set; } = string.Empty;

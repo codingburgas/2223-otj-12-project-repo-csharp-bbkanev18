@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.BLL.Services.interfaces;
+using SchoolSystem.DAL.DataTransferObjects;
 using SchoolSystem.DAL.Models;
 
 namespace SchoolSystem.Controllers
@@ -17,10 +18,34 @@ namespace SchoolSystem.Controllers
             _testService = testService;
         }
 
+        [HttpGet]
         public IActionResult Index(string? id)
         {
             var model = _testService.GetCurrentTest(id, User?.Identity?.Name);
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult EditTest(string? id)
+        {
+            var model = _testService.GetEditTest(id);
+            return View(model);
+            //return RedirectToAction("Index", new { id = id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult EditTest(TestAddInSectionTransferObject transferObject)
+        {
+            if (_testService.UpdateTest(transferObject))
+            {
+                var model = _testService.GetEditTest(transferObject.Id);
+                ModelState.AddModelError(string.Empty, "Грешка в данните!");
+                return View(model);
+            }
+            TempData["Message"] = $"Усшесно редактиране на теста.";
+            return RedirectToAction("Index", new { id = transferObject.Id });
         }
     }
 }

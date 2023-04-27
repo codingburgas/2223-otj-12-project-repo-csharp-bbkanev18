@@ -3,6 +3,14 @@
     ViewData["Title"] = "Course Section Page";
 }
 
+@if (TempData.ContainsKey("Message") && TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -15,6 +23,10 @@
             {
                 <p class="text-center">Този тест се затваря на @Model.Deadline</p>
             }
+            @if (Model.QuestionInTest != 0)
+            {
+                <p class="text-center">Въпроси: @Model.QuestionInTest </p>
+            }
             <p class="text-center">Времетраене на теста: @Model.TimeLimit mins</p>
             @if (Model.IsCurrentUserMakeTest)
             {
@@ -22,14 +34,28 @@
             }
             else
             {
-                <div class="text-center">
-                    <a class="btn btn-secondary btn-block mx-auto">Започни</a>
-                </div>
+                @if (Model.QuestionInTest == 0)
+                {
+                    <p class="text-center text-danger"> <i class="bi bi-exclamation-octagon"></i> В теста няма добавени въпроси <i class="bi bi-exclamation-octagon"></i></p>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <a class="btn btn-secondary btn-block mx-auto">Започни</a>
+                    </div>
+                }
             }
         </div>
     </div>
 </div>
 
+@if (User.IsInRole("admin") || User.IsInRole("teacher"))
+{
+    <div class="text-lg-end">
+        <a class="btn btn-success btn-block mx-auto" asp-action="EditTest" asp-route-id="@Model.Id">Редактиране на теста</a>
+        <a class="btn btn-primary btn-block mx-auto">Въпроси</a>
+    </div>
+}
 
 <div>
     <a class="bi bi-arrow-bar-left" asp-controller="Course" asp-action="CourseSection" asp-route-id="@Model.CourseId">Обратно към курса</a>

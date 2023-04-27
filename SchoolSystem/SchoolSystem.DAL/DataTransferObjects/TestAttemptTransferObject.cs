@@ -15,6 +15,7 @@ namespace SchoolSystem.DAL.DataTransferObjects
         public string CourseId { get; set; } = string.Empty;
         public bool IsCurrentUserMakeTest { get; set; }
         public int UserScore { get; set; }
+        public int QuestionInTest { get; set; }
 
     }
 }
