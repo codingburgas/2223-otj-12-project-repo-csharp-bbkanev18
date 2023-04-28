@@ -61,7 +61,7 @@ namespace SchoolSystem.Controllers
         [Authorize(Roles = "admin,teacher")]
         public IActionResult AddQuestion(string? id)
         {
-            var model = _testService.GetCreateQuestion(id);
+            CreateQuestionTransferObject model = _testService.GetCreateQuestion(id);
             return View(model);
         }
 
@@ -95,8 +95,28 @@ namespace SchoolSystem.Controllers
         [Authorize(Roles = "admin,teacher")]
         public IActionResult DetailsQuestion(string? id, string? questionId)
         {
-            var model = _testService.GetCreateQuestion(id, questionId);
+            CreateQuestionTransferObject model = _testService.GetCreateQuestion(id, questionId);
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult EditQuestion(string? id, string? questionId)
+        {
+            CreateQuestionTransferObject model = _testService.GetCreateQuestion(id, questionId);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult EditQuestion(string? testId,string? questionId, CreateQuestionTransferObject transferObject)
+        {
+            if(_testService.UpdateQuestion(questionId, transferObject))
+            {
+                return Redirect("https://http.cat/404");
+            }
+            TempData["Message"] = $"Усшесно редактиране на въпроса.";
+            return RedirectToAction("Question", new { id = testId });
         }
     }
 }

@@ -39,7 +39,7 @@ namespace SchoolSystem.BLL.Services
                 }
             }
 
-            if(currentUser?.UsersTests != null)
+            if (currentUser?.UsersTests != null)
             {
                 foreach (var testScore in currentUser.UsersTests)
                 {
@@ -100,9 +100,9 @@ namespace SchoolSystem.BLL.Services
             if (currentTest == null)
                 return true;
 
-            currentTest.Name= transferObject.Name;
-            currentTest.TimeLimit= transferObject.TimeLimit;
-            currentTest.Deadline= transferObject.Deadline;
+            currentTest.Name = transferObject.Name;
+            currentTest.TimeLimit = transferObject.TimeLimit;
+            currentTest.Deadline = transferObject.Deadline;
 
             _schoolDBContext.SaveChanges();
 
@@ -161,7 +161,7 @@ namespace SchoolSystem.BLL.Services
                     var asnwer = CreateAnswer(answers);
                     ConnectQuestionAnswer(question.Id, asnwer.Id, false);
                 }
-                
+
             }
             return false;
         }
@@ -187,17 +187,17 @@ namespace SchoolSystem.BLL.Services
 
         public bool DeleteQuestion(string? testId, string? questionId)
         {
-           var question = _schoolDBContext.Questions
-                .Include(qa => qa.QuestionsAnswers)
-                .Include(t => t.Tests)
-                .Where(questions => questions.Id == questionId)
-                .First();
+            var question = _schoolDBContext.Questions
+                 .Include(qa => qa.QuestionsAnswers)
+                 .Include(t => t.Tests)
+                 .Where(questions => questions.Id == questionId)
+                 .First();
 
             var currentTest = _schoolDBContext.Tests.Find(testId);
 
             if (question == null || currentTest == null)
                 return true;
-            
+
             question.Tests.Remove(currentTest);
 
             var answers = new List<string>();
@@ -224,7 +224,7 @@ namespace SchoolSystem.BLL.Services
         private bool DeleteAnswer(string? answerId)
         {
             var answer = _schoolDBContext.Answers.Find(answerId);
-            if (answer == null) 
+            if (answer == null)
                 return true;
             _schoolDBContext.Remove(answer);
             return false;
@@ -259,6 +259,9 @@ namespace SchoolSystem.BLL.Services
                     questionAnswer.Add(GetAnswerName(answers.AnswerId));
             }
 
+            if (questionAnswer.Count == 0)
+                questionAnswer = null;
+
             return new CreateQuestionTransferObject
             {
                 Test = currentTest,
@@ -268,6 +271,89 @@ namespace SchoolSystem.BLL.Services
                 Answers = questionAnswer,
                 QuestionId = questionId
             };
+        }
+
+        private bool UpdateAnswer(string? answerId, string newName)
+        {
+            var answer = _schoolDBContext.Answers.Find(answerId);
+            if (answer == null)
+                return true;
+            answer.Name = newName;
+            return false;
+        }
+
+        public bool UpdateQuestion(string? questionId, CreateQuestionTransferObject transferObject)
+        {
+            var currentQuestion = _schoolDBContext.Questions
+                .Include(qa => qa.QuestionsAnswers)
+                .Where(questions => questions.Id == questionId)
+                .First();
+            if (currentQuestion == null || transferObject == null)
+                return true;
+
+            currentQuestion.Name = transferObject.QuestionName;
+            currentQuestion.Points = transferObject.Points;
+
+            foreach (var questionAnswer in currentQuestion.QuestionsAnswers)
+            {
+                if (questionAnswer.IsCorrect)
+                {
+                    if (UpdateAnswer(questionAnswer.AnswerId, transferObject.CorrectAnswer))
+                        return true;
+                    break;
+                }
+            }
+
+            int counterAnswer = 0;
+            foreach (var questionAnswer in currentQuestion.QuestionsAnswers)
+            {
+                if (questionAnswer.IsCorrect) { }
+                else
+                {
+                    if (transferObject.Answers?[counterAnswer] == null)
+                    {
+                        _schoolDBContext.Remove(questionAnswer);
+                        if (DeleteAnswer(questionAnswer.AnswerId))
+                            return true;
+                        counterAnswer++;
+                    }
+                    else
+                    {
+                        if (UpdateAnswer(questionAnswer.AnswerId, transferObject.Answers[counterAnswer]))
+                            return true;
+                        else
+                            counterAnswer++;
+                    }
+                }
+            }
+            _schoolDBContext.SaveChanges();
+            List<string> answers= new List<string>();
+            foreach (var answer in transferObject.Answers ?? new List<string>())
+            {
+                if (answer == null)
+                    break;
+                else
+                    answers.Add(answer);
+            }
+            int counter = currentQuestion.QuestionsAnswers.Count - answers.Count;
+            counter--;
+
+            if (counter < 0)
+            {
+                counter = -counter;
+                for (int i = 0; i < counter; i++)
+                {
+                    var answer = CreateAnswer(answers[counterAnswer]);
+                    ConnectQuestionAnswer(currentQuestion.Id, answer.Id, false);
+                    counterAnswer++;
+                }
+            }
+            else if (counter == 0) { }
+
+            _schoolDBContext.SaveChanges();
+            return false;
+
+
         }
     }
 }
