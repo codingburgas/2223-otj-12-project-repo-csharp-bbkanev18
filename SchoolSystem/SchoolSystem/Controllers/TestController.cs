@@ -118,5 +118,16 @@ namespace SchoolSystem.Controllers
             TempData["Message"] = $"Усшесно редактиране на въпроса.";
             return RedirectToAction("Question", new { id = testId });
         }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,teacher")]
+        public IActionResult DeleteTest(string? id, string? courseId)
+        {
+            if (_testService.DeleteTest(id))
+            {
+                return Redirect("https://http.cat/404");
+            }
+            return RedirectToAction("CourseSection", "Course", new { id = courseId });
+        }
     }
 }

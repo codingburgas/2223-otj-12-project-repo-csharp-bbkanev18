@@ -69,8 +69,13 @@
 @if (User.IsInRole("admin") || User.IsInRole("teacher"))
 {
     <div class="text-lg-end">
-        <a class="btn btn-success btn-block mx-auto" asp-action="EditTest" asp-route-id="@Model.Id">Редактиране на теста</a>
-        <a class="btn btn-primary btn-block mx-auto" asp-action="Question" asp-route-id="@Model.Id">Въпроси</a>
+        <form>
+            <a class="btn btn-success btn-block mx-auto" asp-action="EditTest" asp-route-id="@Model.Id">Редактиране</a>
+            <a class="btn btn-primary btn-block mx-auto" asp-action="Question" asp-route-id="@Model.Id">Въпроси</a>
+
+            <input type="hidden" name="courseId" value="@Model.CourseId"/>
+            <input type="submit" formmethod="post" asp-action="DeleteTest" asp-route-id="@Model.Id" value="Изтриване" class="btn btn-danger" />
+        </form>
     </div>
 }
 

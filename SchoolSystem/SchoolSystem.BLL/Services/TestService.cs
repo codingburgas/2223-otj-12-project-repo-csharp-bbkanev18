@@ -355,5 +355,36 @@ namespace SchoolSystem.BLL.Services
 
 
         }
+
+        public bool DeleteTest(string? testId)
+        {
+            var currentTest = _schoolDBContext.Tests
+                .Include(q => q.Questions)
+                .Include(ut => ut.UsersTests)
+                .Include(cs => cs.CourseSections)
+                .Where(tests => tests.Id == testId)
+                .First();
+            if (currentTest == null)
+                return true;
+
+            foreach (var users in currentTest.UsersTests)
+            {
+                _schoolDBContext.Remove(users);
+            }
+
+            foreach (var sections in currentTest.CourseSections)
+            {
+                currentTest.CourseSections.Remove(sections);
+            }
+
+            foreach (var question in currentTest.Questions)
+            { 
+                if (DeleteQuestion(currentTest.Id, question.Id))
+                    return true;
+            }
+            _schoolDBContext.Remove(currentTest);
+            _schoolDBContext.SaveChanges();
+            return false;
+        }
     }
 }
