@@ -9,11 +9,13 @@ namespace SchoolSystem.Tests
     {
         private SchoolDBContext _schoolDBContext;
         private AuthenticationService _authenticationService;
+        private CourseService _courseService;
         [SetUp]
         public void Setup()
         {
             _schoolDBContext = new SchoolDBContext();
             _authenticationService = new AuthenticationService(_schoolDBContext);
+            _courseService = new CourseService(_schoolDBContext);
         }
 
         [Test]
@@ -30,15 +32,38 @@ namespace SchoolSystem.Tests
                 ConfirmPassword = "Test!1234",
                 Age = 16
             };
+
             // Act
             _authenticationService.SignUp(user);
+
             // Assert
             User user1 = _schoolDBContext.Users.Where(user => user.Email == "bbkanev19@codingburgas.bg").First();
             Assert.That(user1 is not null);
 
+            // Delete created user
             _schoolDBContext.Remove<User>(user1 ?? new User());
             _schoolDBContext.SaveChanges();
         }
 
+        [Test]
+        public void Should_CreateCourse_When_InvokeCreateCourseMethod()
+        {
+            // Arrange
+            CourseCreateTransferObject newCourse = new CourseCreateTransferObject()
+            {
+                Name = "Test"
+            };
+
+            // Act
+            _courseService.CreateCourse(newCourse);
+
+            // Assert
+            var course = _schoolDBContext.Courses.Where(courses => courses.Name == "Test").First();
+            Assert.That(course is not null);
+
+            // Delete created course
+            _schoolDBContext.Remove<Course>(course ?? new Course());
+            _schoolDBContext.SaveChanges();
+        }
     }
 }

@@ -129,5 +129,11 @@ namespace SchoolSystem.Controllers
             }
             return RedirectToAction("CourseSection", "Course", new { id = courseId });
         }
+
+        [HttpGet]
+        public IActionResult AttemptTest(string? id)
+        {
+            return View();
+        }
     }
 }
