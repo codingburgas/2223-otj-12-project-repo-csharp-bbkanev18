@@ -14,7 +14,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-
+<form asp-action="GetUsersByEmail">
+    <div class="input-group">
+        <input type="search" id="Email" name="Email" class="form-control rounded" placeholder="Търсене по имейл" aria-label="Search" aria-describedby="search-addon" />
+        <input type="submit" class="btn btn-outline-primary" value="Търсене"/>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>

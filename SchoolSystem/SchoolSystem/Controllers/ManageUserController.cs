@@ -82,5 +82,17 @@ namespace SchoolSystem.Controllers
             TempData["Message"] = $"Паролата за потребителя с имейл '{user.Email}' е променено успешно.";
             return RedirectToAction("Index", "ManageUser");
         }
+
+        [HttpPost]
+        public IActionResult GetUsersByEmail(IFormCollection formData)
+        {
+            if (string.IsNullOrEmpty(formData["Email"]))
+            {
+                var modelsIndex = _manageUserService.GetManageUserTransferObjects();
+                return View("Index", modelsIndex);
+            }
+            var models = _manageUserService.GetUsersByEmail(formData["Email"]);
+            return View("Index",models);
+        }
     }
 }

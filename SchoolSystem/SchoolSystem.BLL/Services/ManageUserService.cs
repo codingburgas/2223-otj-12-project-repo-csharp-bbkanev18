@@ -154,5 +154,39 @@ namespace SchoolSystem.BLL.Services
         {
             return _schoolDBContext.Roles.ToList();
         }
+
+        public List<ManageUserTransferObject> GetUsersByEmail(string email)
+        {
+            var users = _schoolDBContext.Users.Where(user=>user.Email.Contains(email)).ToList();
+            var roles = _schoolDBContext.Roles.ToList();
+
+            var model = new List<ManageUserTransferObject>();
+
+            foreach (var user in users)
+            {
+                foreach (var role in roles)
+                {
+                    if (user.RoleId == role.Id)
+                    {
+                        var subModel = new ManageUserTransferObject
+                        {
+                            Id = user.Id,
+                            FirstName = user.FirstName,
+                            MiddleName = user.MiddleName,
+                            LastName = user.LastName,
+                            Email = user.Email,
+                            Password = user.Password,
+                            Age = user.Age,
+                            Address = user.Address,
+                            Phone = user.Phone,
+                            RoleId = role.Id,
+                            RoleName = role.Name,
+                        };
+                        model.Add(subModel);
+                    }
+                }
+            }
+            return model;
+        }
     }
 }

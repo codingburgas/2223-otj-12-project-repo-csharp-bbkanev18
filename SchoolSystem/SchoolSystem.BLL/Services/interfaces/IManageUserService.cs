@@ -17,5 +17,7 @@ namespace SchoolSystem.BLL.Services.interfaces
         public bool UpdateUserPassword(ManageUserTransferObject user);
 
         public List<Role> GetRoles();
+
+        public List<ManageUserTransferObject> GetUsersByEmail(string email);
     }
 }
