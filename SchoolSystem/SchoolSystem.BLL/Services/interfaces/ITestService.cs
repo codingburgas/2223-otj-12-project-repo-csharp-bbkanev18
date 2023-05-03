@@ -25,6 +25,8 @@ namespace SchoolSystem.BLL.Services.interfaces
         public int GetMaxPoints(string? testId);
         public int GetUserPoints(string? testId, Dictionary<string, string> answers);
         public bool AddUserScore(string? testId, string? userId, int maxPoints, int userPoints);
+        public ResultUserTransferObject GetResultUser(string? testId);
+        public bool RemoveUserScore(string? testId, string? userId);
 
     }
 }

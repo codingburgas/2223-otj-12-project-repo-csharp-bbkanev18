@@ -155,5 +155,24 @@ namespace SchoolSystem.Controllers
                 return Redirect("https://http.cat/404");
             return RedirectToAction("Index", new { id =  testId});
         }
+
+        [HttpGet]
+        [Authorize(Roles ="admin,teacher")]
+        public IActionResult ResultUsers(string? id)
+        {
+            var model = _testService.GetResultUser(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="admin,teacher")]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveUserScore(string? id,string? userId)
+        {
+            if(_testService.RemoveUserScore(id, userId))
+                return Redirect("https://http.cat/404");
+            TempData["Message"] = $"Усшесно премахнат резултат.";
+            return RedirectToAction("ResultUsers", new { id = id });
+        }
     }
 }

@@ -484,7 +484,55 @@ namespace SchoolSystem.BLL.Services
             _schoolDBContext.SaveChanges();
             return false;
         }
+        public ResultUserTransferObject GetResultUser(string? testId)
+        {
+            var currentTest = _schoolDBContext.Tests
+                .Include(ut=>ut.UsersTests)
+                .Where(tests=> tests.Id == testId)
+                .First();
+            if(currentTest == null)
+                return new ResultUserTransferObject();
 
+            ResultUserTransferObject transferObject = new ResultUserTransferObject();
+            transferObject.CurrentTest = currentTest;
+
+            Dictionary<User,int> users = new Dictionary<User,int>();
+            foreach (var results in currentTest.UsersTests)
+            {
+                var user = GetUserById(results.UserId);
+                if (user == null)
+                    return new ResultUserTransferObject();
+                users.Add(user, results.Score);
+            }
+            transferObject.Users = users;
+            return transferObject;
+        }
+        public bool RemoveUserScore(string? testId, string? userId)
+        {
+            var currentTest = _schoolDBContext.Tests
+                .Include(ut =>ut.UsersTests)
+                .Where(tests => tests.Id == testId)
+                .First();
+            var user = GetUserById(userId);
+            if (currentTest == null || user == null)
+                return true;
+            foreach (var users in currentTest.UsersTests)
+            {
+                if (users.UserId == user.Id)
+                    _schoolDBContext.Remove(users);
+            }
+            _schoolDBContext.SaveChanges();
+
+            return false;
+        }
+
+        private User GetUserById(string? userId)
+        {
+            var user = _schoolDBContext.Users.Find(userId);
+            if (user == null)
+                return new User();
+            return user;
+        }
         private List<string> GetQuestionsFromDictionary(Dictionary<string, string> answers)
         {
             var questions = new List<string>();

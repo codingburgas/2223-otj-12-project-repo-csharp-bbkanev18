@@ -10,7 +10,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-<h1>Името на теста: </h1>
+<h1>Името на теста: '@Model.Test.Name'</h1>
 
 <hr>
 <a asp-action="AddQuestion" asp-route-id="@Model.Test.Id" class="bi bi-plus-circle-fill" style="font-size: 20px">
@@ -18,7 +18,7 @@
 </a>
 <hr>
 
-<h1>Всички добавени въпроси</h1>
+<h2>Всички добавени въпроси</h2>
 <br />
 
 @if (Model.Questions.Count != 0)
@@ -31,9 +31,6 @@
                 </th>
                 <th>
                     Точки
-                </th>
-                <th>
-
                 </th>
                 <th>
 
