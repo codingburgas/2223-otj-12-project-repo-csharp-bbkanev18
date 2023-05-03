@@ -15,29 +15,29 @@
 <h2>Резултати:</h2>
 @if (Model.Users.Count > 0)
 {
-    @foreach (var users in Model.Users)
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Електронна поща
-                    </th>
-                    <th>
-                        Първи име
-                    </th>
-                    <th>
-                        Фамилия
-                    </th>
-                    <th>
-                        Проценти
-                    </th>
-                    <th>
-                        
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Електронна поща
+                </th>
+                <th>
+                    Първи име
+                </th>
+                <th>
+                    Фамилия
+                </th>
+                <th>
+                    Проценти
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var users in Model.Users)
+            {
                 <tr>
                     <td>
                         @users.Key.Email
@@ -54,13 +54,13 @@
                     <td>
                         <form method="post">
                             <input type="hidden" name="userId" value="@users.Key.Id">
-                            <input type="submit" asp-action="RemoveUserScore"  asp-route-id="@Model.CurrentTest.Id" value="Премахване" class="btn btn-danger" />
+                            <input type="submit" asp-action="RemoveUserScore" asp-route-id="@Model.CurrentTest.Id" value="Премахване" class="btn btn-danger" />
                         </form>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
 }
 else
 {
