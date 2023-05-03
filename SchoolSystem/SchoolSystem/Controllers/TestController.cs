@@ -133,7 +133,27 @@ namespace SchoolSystem.Controllers
         [HttpGet]
         public IActionResult AttemptTest(string? id)
         {
-            return View();
+            var model = _testService.GetAttemptTest(id, User?.Identity?.Name);
+            if(model == null)
+                return Redirect("https://http.cat/500");
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FinishTest(string testId, Dictionary<string, string> SelectedAnswers)
+        {
+            int maxPoints = _testService.GetMaxPoints(testId);
+            if(maxPoints < 0)
+                return Redirect("https://http.cat/404");
+
+            int userPoints = _testService.GetUserPoints(testId, SelectedAnswers);
+            if (userPoints < 0)
+                return Redirect("https://http.cat/404");
+
+            if (_testService.AddUserScore(testId, User?.Identity?.Name, maxPoints, userPoints))
+                return Redirect("https://http.cat/404");
+            return RedirectToAction("Index", new { id =  testId});
         }
     }
 }

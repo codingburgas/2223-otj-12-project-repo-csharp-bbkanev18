@@ -27,7 +27,7 @@ namespace SchoolSystem.Tests
                 FirstName = "Boris",
                 MiddleName = "Biserov",
                 LastName = "Kanev",
-                Email = "bbkanev19@codingburgas.bg",
+                Email = "xixorav606@soombo.com",
                 Password = "Test!1234",
                 ConfirmPassword = "Test!1234",
                 Age = 16
@@ -37,7 +37,7 @@ namespace SchoolSystem.Tests
             _authenticationService.SignUp(user);
 
             // Assert
-            User user1 = _schoolDBContext.Users.Where(user => user.Email == "bbkanev19@codingburgas.bg").First();
+            User user1 = _schoolDBContext.Users.Where(user => user.Email == "xixorav606@soombo.com").First();
             Assert.That(user1 is not null);
 
             // Delete created user

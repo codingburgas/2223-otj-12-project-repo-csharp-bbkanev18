@@ -21,6 +21,10 @@ namespace SchoolSystem.BLL.Services.interfaces
         public bool DeleteQuestion(string? testId, string? questionId);
         public bool DeleteTest(string? testId);
         public bool UpdateQuestion(string? questionId, CreateQuestionTransferObject transferObject);
+        public List<AttemptTestTransferObject> GetAttemptTest(string? testId, string? currentUserId);
+        public int GetMaxPoints(string? testId);
+        public int GetUserPoints(string? testId, Dictionary<string, string> answers);
+        public bool AddUserScore(string? testId, string? userId, int maxPoints, int userPoints);
 
     }
 }

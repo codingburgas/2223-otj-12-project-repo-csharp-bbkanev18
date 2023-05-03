@@ -327,7 +327,7 @@ namespace SchoolSystem.BLL.Services
                 }
             }
             _schoolDBContext.SaveChanges();
-            List<string> answers= new List<string>();
+            List<string> answers = new List<string>();
             foreach (var answer in transferObject.Answers ?? new List<string>())
             {
                 if (answer == null)
@@ -378,13 +378,166 @@ namespace SchoolSystem.BLL.Services
             }
 
             foreach (var question in currentTest.Questions)
-            { 
+            {
                 if (DeleteQuestion(currentTest.Id, question.Id))
                     return true;
             }
             _schoolDBContext.Remove(currentTest);
             _schoolDBContext.SaveChanges();
             return false;
+        }
+        public List<AttemptTestTransferObject> GetAttemptTest(string? testId, string? currentUserId)
+        {
+            List<AttemptTestTransferObject> transferObjects = new List<AttemptTestTransferObject>();
+            Test currentTest = _schoolDBContext.Tests
+                .Include(ut => ut.UsersTests)
+                .Include(qt => qt.Questions)
+                .Where(tests => tests.Id == testId)
+                .First();
+            if (currentTest == null || currentUserId == null)
+                return new List<AttemptTestTransferObject>();
+
+            foreach (var users in currentTest.UsersTests)
+            {
+                if (users.UserId == currentUserId)
+                    return new List<AttemptTestTransferObject>();
+            }
+
+            foreach (var question in currentTest.Questions)
+            {
+                AttemptTestTransferObject temp = new AttemptTestTransferObject();
+                temp.TestId = currentTest.Id;
+                temp.TestName = currentTest.Name;
+                temp.CurrentQuestion = question;
+                List<Answer> answers = GetAnswers(question.Id);
+                if (answers == null)
+                    return new List<AttemptTestTransferObject>();
+                temp.Answers = answers;
+                transferObjects.Add(temp);
+            }
+            return transferObjects;
+        }
+
+        public int GetMaxPoints(string? testId)
+        {
+            var currentTest = _schoolDBContext.Tests
+                .Include(qt => qt.Questions)
+                .Where(tests => tests.Id == testId)
+                .First();
+            if (currentTest == null)
+                return -1;
+            int maxPoints = 0;
+            foreach (var question in currentTest.Questions)
+            {
+                maxPoints += question.Points;
+            }
+            return maxPoints;
+        }
+
+        public int GetUserPoints(string? testId, Dictionary<string, string> answers)
+        {
+            var currentTest = _schoolDBContext.Tests
+                .Include(qt => qt.Questions)
+                .Where(tests => tests.Id == testId)
+                .First();
+            if (currentTest == null)
+                return -1;
+
+            int userPoints = 0;
+
+            List<string> questionsId = GetQuestionsFromDictionary(answers);
+            List<string> answersId = GetAnswersFromDictionary(answers);
+
+            var questionAnswers = _schoolDBContext.QuestionsAnswers.ToList();
+
+            foreach (var questionAnswer in questionAnswers)
+            {
+                for (int i = 0; i < questionsId.Count; i++)
+                {
+                    if (questionAnswer.QuestionId == questionsId[i] &&
+                        questionAnswer.AnswerId == answersId[i] &&
+                        questionAnswer.IsCorrect)
+                    {
+                        var question = _schoolDBContext.Questions.Find(questionAnswer.QuestionId);
+                        if (question == null)
+                            return -1;
+                        userPoints += question.Points;
+                    }
+                }
+            }
+            return userPoints;
+        }
+
+        public bool AddUserScore(string? testId, string? userId, int maxPoints, int userPoints)
+        {
+            var currentTest = _schoolDBContext.Tests.Find(testId);
+            if (currentTest == null || userId == null) 
+                return true;
+            float result = ((float)userPoints / (float)maxPoints)*100;
+            int resultInInt = (int)Math.Round(result, MidpointRounding.AwayFromZero);
+            var userTest = new UsersTest();
+
+            userTest.TestId = currentTest.Id;
+            userTest.UserId = userId;
+            userTest.Score = resultInInt;
+            _schoolDBContext.Add(userTest);
+            _schoolDBContext.SaveChanges();
+            return false;
+        }
+
+        private List<string> GetQuestionsFromDictionary(Dictionary<string, string> answers)
+        {
+            var questions = new List<string>();
+            foreach (var question in answers)
+            {
+                if (question.Key.Contains("SelectedAnswers_"))
+                {
+                    string temp = question.Key;
+                    temp = temp.Replace("SelectedAnswers_", "");
+                    questions.Add(temp);
+                }
+            }
+            return questions;
+        }
+        private List<string> GetAnswersFromDictionary(Dictionary<string, string> answers)
+        {
+            var currentAnswers = new List<string>();
+            foreach (var answer in answers)
+            {
+                if (answer.Key.Contains("SelectedAnswers_"))
+                {
+                    string temp = answer.Value;
+                    currentAnswers.Add(temp);
+                }
+            }
+            return currentAnswers;
+        }
+
+        private List<Answer> GetAnswers(string questionId)
+        {
+            var questionsAnswers = _schoolDBContext.QuestionsAnswers.ToList();
+            if (questionsAnswers == null)
+                return new List<Answer>();
+            List<Answer> answers = new List<Answer>();
+            foreach (var question in questionsAnswers)
+            {
+                if (question.QuestionId == questionId)
+                {
+                    var answer = GetAnswer(question.AnswerId);
+                    if (answer == null)
+                        return new List<Answer>();
+                    answers.Add(answer);
+                }
+            }
+            return answers;
+        }
+
+        private Answer GetAnswer(string answerId)
+        {
+            var answer = _schoolDBContext.Answers.Find(answerId);
+            if (answer == null)
+                return new Answer();
+            return answer;
         }
     }
 }

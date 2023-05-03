@@ -1,9 +1,35 @@
-﻿@{
+﻿@model List<SchoolSystem.DAL.DataTransferObjects.AttemptTestTransferObject>
+@{
+    int counter = 1;
+    int maxQuestion = Model.Count;
+    var testName = Model.First();
+}
+@{
     ViewData["Title"] = "Attempt Test Page";
 }
+<h1>@testName.TestName</h1>
+<hr>
+<br>
+<form method="post" asp-action="FinishTest">
+    @foreach (var test in Model)
+    {
+        <h3>@test.CurrentQuestion.Name</h3>
+        <hr>
+        <p>Въпрос @counter от @maxQuestion:</p>
+        @foreach (var answer in test.Answers)
+        {
+            <label>
+                <input type="radio" name="SelectedAnswers_@test.CurrentQuestion.Id" value="@answer.Id"/> @answer.Name
+            </label>
+            <br />
+        }
+        <hr>
+        counter++;
+    }
 
-
-
+    <input type="hidden" name="testId" value="@testName.TestId" />
+    <input class="btn btn-primary" type="submit" value="Запази отговорите" />
+</form>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
