@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/SchoolSystem.styles.css" asp-append-version="true" />
     <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/node_modules/fullcalendar/main.min.css" />
 </head>
 <body>
     <header>
@@ -32,6 +34,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ManageUser" asp-action="Index">Управление на потребителите</a>
                             </li>
+                        }
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            @if (User.IsInRole("user") || User.IsInRole("teacher") || User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Calendar" asp-action="Index">Календар</a>
+                                </li>
+                            }
                         }
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
@@ -67,6 +78,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/moment/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
