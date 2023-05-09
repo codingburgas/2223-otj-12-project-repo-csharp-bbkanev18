@@ -15,6 +15,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IManageUserService, ManageUserService>();
 builder.Services.AddScoped<ITestService, TestService>();
+builder.Services.AddScoped<ICalendarService, CalendarService>();
 
 // Connction to db
 builder.Services.AddDbContext<SchoolDBContext>(options => options.UseSqlServer(
