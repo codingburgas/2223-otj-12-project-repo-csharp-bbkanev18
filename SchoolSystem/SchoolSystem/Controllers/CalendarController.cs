@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.BLL.Services.interfaces;
 using SchoolSystem.DAL.DataTransferObjects;
@@ -19,13 +20,9 @@ namespace SchoolSystem.Controllers
 
         public IActionResult Index()
         {
-            var model = new List<CalendarTransferObject>();
-            var newEvent = new CalendarTransferObject
-            {
-                Name = "New Event",
-                Deadline = DateTime.Now
-            };
-            model.Add(newEvent);
+            var model = _calendarService.GetCalendarTransfers(User?.Identity?.Name ?? string.Empty);
+            if(model.Count == 0)
+                return Redirect("https://http.cat/404");
             return View(model);
         }
     }
