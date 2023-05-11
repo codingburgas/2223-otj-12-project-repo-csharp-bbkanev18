@@ -44,7 +44,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Грешка в данните!");
                 return View(model);
             }
-            TempData["Message"] = $"Усшесно редактиране на теста.";
+            TempData["Message"] = $"Успешно редактиране на теста.";
             return RedirectToAction("Index", new { id = transferObject.Id });
         }
 
@@ -75,7 +75,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Грешка в данните!");
                 return View(model);
             }
-            TempData["Message"] = $"Усшесно добавен въпрос.";
+            TempData["Message"] = $"Успешно добавен въпрос.";
             return RedirectToAction("Question", new { id = testId });
         }
 
@@ -87,7 +87,7 @@ namespace SchoolSystem.Controllers
             {
                 return Redirect("https://http.cat/404");
             }
-            TempData["Message"] = $"Усшесно премахнат въпрос.";
+            TempData["Message"] = $"Успешно премахнат въпрос.";
             return RedirectToAction("Question", new { id = id });
         }
 
@@ -115,7 +115,7 @@ namespace SchoolSystem.Controllers
             {
                 return Redirect("https://http.cat/404");
             }
-            TempData["Message"] = $"Усшесно редактиране на въпроса.";
+            TempData["Message"] = $"Успешно редактиране на въпроса.";
             return RedirectToAction("Question", new { id = testId });
         }
 
@@ -171,7 +171,7 @@ namespace SchoolSystem.Controllers
         {
             if(_testService.RemoveUserScore(id, userId))
                 return Redirect("https://http.cat/404");
-            TempData["Message"] = $"Усшесно премахнат резултат.";
+            TempData["Message"] = $"Успешно премахнат резултат.";
             return RedirectToAction("ResultUsers", new { id = id });
         }
     }

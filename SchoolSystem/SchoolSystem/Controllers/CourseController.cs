@@ -117,7 +117,7 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
 
-            TempData["Message"] = $"Усшесно създаден раздел с име: '{transferObject.Name}'.";
+            TempData["Message"] = $"Успешно създаден раздел с име: '{transferObject.Name}'.";
 
             return RedirectToAction("Index", "Course");
         }
@@ -146,7 +146,7 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
 
-            TempData["Message"] = $"Усшесна промяна на името на раздел: '{transferObject.Name}'";
+            TempData["Message"] = $"Успешно промяна на името на раздел: '{transferObject.Name}'";
             return RedirectToAction("Index", "Course");
         }
 
@@ -175,7 +175,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Грешка при създаването на тест!");
                 return View(model);
             }
-            TempData["Message"] = $"Усшесно създаден тест.";
+            TempData["Message"] = $"Успешно създаден тест.";
             return RedirectToAction("Index", "Course");
         }
 
@@ -213,7 +213,7 @@ namespace SchoolSystem.Controllers
                 return View(model);
             }
 
-            TempData["Message"] = $"Усшесно създаден урок.";
+            TempData["Message"] = $"Успешно създаден урок.";
             return RedirectToAction("Index", "Course");
         }
 
@@ -242,7 +242,7 @@ namespace SchoolSystem.Controllers
                 ModelState.AddModelError(string.Empty, "Този потребител вече е курса!");
                 return View(model);
             }
-            TempData["Message"] = $"Усшесно добавен потребител в курса.";
+            TempData["Message"] = $"Успешно добавен потребител в курса.";
             return RedirectToAction("UsersInCourse", new { id = id });
         }
 
@@ -263,7 +263,7 @@ namespace SchoolSystem.Controllers
             {
                 return Redirect("https://http.cat/409");
             }
-            TempData["Message"] = $"Усшесно изтрит потребител от курса.";
+            TempData["Message"] = $"Успешно изтрит потребител от курса.";
             return RedirectToAction("UsersInCourse", new { id = courseId });
         }
     }
