@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SchoolSystem.DAL.DataTransferObjects.CourseSectionTransferObject>
+
+@{
+    ViewData["Title"] = "Course Section Page";
+}
+
+@{
+    var courseName = Model.FirstOrDefault();
+}
+
+<h1>@courseName?.CourseName</h1>
+<hr>
+@if (User.IsInRole("teacher") || User.IsInRole("admin"))
+{
+    <a asp-action="AddSectionCourse" asp-route-id="@courseName?.CourseId" class="bi bi-plus-circle-fill" style="font-size: 20px">
+        Добавяне на нов раздел в курс
+    </a>
+    <hr>
+}
+
+@if (courseName?.Name == "")
+{
+    <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
+        <i class="bi-exclamation-triangle-fill" style="font-size: 5em;"></i>
+        <div style="font-size:50px; margin-left: 20px">
+            В този курс няма раздели!
+        </div>
+    </div>
+}
+
+@foreach (var courseSection in Model)
+{
+    @if (courseSection.Name != "")
+    {
+        <div style="font-size: 25px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: right;">
+                <h3>@courseSection.Name</h3>
+            </div>
+            @if (User.IsInRole("teacher") || User.IsInRole("admin"))
+            {
+                <div style="display: flex; align-items: center;">
+                    <a class="btn btn-success bi bi-pencil-square" asp-action="EditSectionCourse" asp-route-id="@courseSection.Id">Редактиране на раздел</a>
+                    <div style="width: 10px;"></div> <!-- Creates space between buttons -->
+                    <a class="btn btn-primary bi bi-database-add" asp-action="CreateTest" asp-route-id="@courseSection.Id">Добавяне на тест</a>
+                    <div style="width: 10px;"></div> <!-- Creates space between buttons -->
+                    <a class="btn btn-primary bi bi-file-earmark-plus" asp-action="CreateLesson" asp-route-id="@courseSection.Id">Добавяне на урок</a>
+                </div>
+            }
+        </div>
+    }
+
+    @if (courseSection.Tests.Count > 0)
+    {
+        foreach (var test in courseSection.Tests)
+        {
+            <a class="h4 m-lg-5 bi bi-clipboard-data-fill d-block" asp-controller="Test" asp-action="Index" asp-route-id="@test.Id">
+                @test.Name
+            </a>
+        }
+    }
+
+    @if (courseSection.Files.Count > 0)
+    {
+        foreach (var file in courseSection.Files)
+        {
+            <a class="h4 m-lg-5 bi bi-file-earmark-arrow-down-fill d-block" href="">
+                @file.Filename
+            </a>
+        }
+    }
+
+    <br>
+}
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-action="Index">Обратно към курсовете</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

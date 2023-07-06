@@ -1,0 +1,29 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.CourseSectionTransferObject
+@{
+    ViewData["Title"] = "Edit Section Course Page";
+}
+
+<h1>Редактиране на раздел Курс</h1>
+<hr>
+
+<form asp-action="EditSectionCourse">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Име на раздела</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="margin-top: 20px">
+        <input type="submit" value="Запазите промените" class="btn btn-primary" />
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>
+<div>
+    <a class="bi bi-arrow-bar-left" asp-route-id="@Model.CourseId" asp-action="CourseSection">Обратно към курса</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

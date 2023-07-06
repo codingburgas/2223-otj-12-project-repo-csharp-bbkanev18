@@ -1,0 +1,83 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.QuestionInTestTransferObject
+@{
+    ViewData["Title"] = "Question Page";
+}
+
+@if (TempData.ContainsKey("Message") && TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<h1>Името на теста: '@Model.Test.Name'</h1>
+
+<hr>
+<a asp-action="AddQuestion" asp-route-id="@Model.Test.Id" class="bi bi-plus-circle-fill" style="font-size: 20px">
+    Добавяне на въпрос
+</a>
+<hr>
+
+<h2>Всички добавени въпроси</h2>
+<br />
+
+@if (Model.Questions.Count != 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Въпрос
+                </th>
+                <th>
+                    Точки
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model.Questions)
+            {
+                <tr>
+                    <td>
+                        @question.Name
+                    </td>
+                    <td>
+                        @question.Points
+                    </td>
+                    <td>
+                        <form>
+                            <input type="hidden" name="questionId" value="@question.Id" />
+                            <input type="submit" formmethod="get" asp-action="EditQuestion" asp-route-id="@Model.Test.Id" value="Редактиране" class="btn btn-success" /> |
+                            <input type="submit" formmethod="get" asp-action="DetailsQuestion" asp-route-id="@Model.Test.Id" value="Детайли" class="btn btn-primary" /> |
+                            <input type="submit" formmethod="post" asp-action="RemoveQuestion" asp-route-id="@Model.Test.Id" value="Премахване" class="btn btn-danger" />
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
+        <i class="bi-exclamation-triangle-fill" style="font-size: 5em;"></i>
+        <div style="font-size:50px; margin-left: 20px">
+            Няма добавени въпроси!
+        </div>
+    </div>
+}
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-route-id="@Model.Test.Id" asp-action="Index">Обратно към теста</a>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

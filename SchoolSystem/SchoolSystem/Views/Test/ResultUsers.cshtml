@@ -1,0 +1,83 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.ResultUserTransferObject
+@{
+    ViewData["Title"] = "Result Test Page";
+}
+
+@if (TempData.ContainsKey("Message") && TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<h1>Името на теста: '@Model.CurrentTest.Name'</h1>
+<hr>
+<h2>Резултати:</h2>
+@if (Model.Users.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Електронна поща
+                </th>
+                <th>
+                    Първи име
+                </th>
+                <th>
+                    Фамилия
+                </th>
+                <th>
+                    Проценти
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var users in Model.Users)
+            {
+                <tr>
+                    <td>
+                        @users.Key.Email
+                    </td>
+                    <td>
+                        @users.Key.FirstName
+                    </td>
+                    <td>
+                        @users.Key.LastName
+                    </td>
+                    <td>
+                        @users.Value%
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="userId" value="@users.Key.Id">
+                            <input type="submit" asp-action="RemoveUserScore" asp-route-id="@Model.CurrentTest.Id" value="Премахване" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
+        <i class="bi-exclamation-triangle-fill" style="font-size: 5em;"></i>
+        <div style="font-size:50px; margin-left: 20px">
+            Няма потребители който да са правили теста!
+        </div>
+    </div>
+}
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-route-id="@Model.CurrentTest.Id" asp-action="Index">Обратно към теста</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

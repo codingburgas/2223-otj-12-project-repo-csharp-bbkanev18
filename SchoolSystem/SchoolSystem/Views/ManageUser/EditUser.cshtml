@@ -1,0 +1,71 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.ManageUserTransferObject
+
+@{
+    ViewData["Title"] = "Edit User Page";
+}
+<h1>Редактиране на потребител</h1>
+<hr>
+
+<form method="post" asp-action="EditUser" asp-controller="ManageUser">
+    <div class="form-group">
+        <label asp-for="FirstName">Първо име</label>
+        <input asp-for="FirstName" class="form-control" required />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MiddleName">Презиме</label>
+        <input asp-for="MiddleName" class="form-control" required />
+        <span asp-validation-for="MiddleName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Фамилия</label>
+        <input asp-for="LastName" class="form-control" required />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Електронна поща</label>
+        <input asp-for="Email" class="form-control" required />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age">Възраст</label>
+        <input asp-for="Age" class="form-control" required />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address">Адрес (по избор)</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone">Телефон (по избор)</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Роля:</label><br />
+        @foreach (var role in ViewBag.Roles)
+        {
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="Role" value="@role.Id" @(Model.RoleId == role.Id ? "checked" : "") />
+                    @role.Name
+                </label>
+            </div>
+        }
+    </div>
+    <div class="form-group" style="margin-top: 20px">
+        <input type="submit" value="Запазите промените" class="btn btn-primary" />
+    </div>
+    <div asp-validation-summary="ModelOnly"></div>
+</form>
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-action="Index">Обратно към списъка</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

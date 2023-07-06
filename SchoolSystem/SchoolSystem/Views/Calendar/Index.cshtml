@@ -1,0 +1,41 @@
+﻿@model List<SchoolSystem.DAL.DataTransferObjects.CalendarTransferObject>
+@{
+    ViewData["Title"] = "Calendar Page";
+}
+
+<div class="container">
+    <h1>Календар</h1>
+    <div id="calendar"></div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendarEvents = @Html.Raw(Json.Serialize(Model.Select(e => new
+            {
+            title = e.Name,
+            start = e.Deadline,
+            })));
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: calendarEvents,
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                buttonText: {
+                    today: 'днес',
+                    month: 'месец',
+                    week: 'седмица',
+                    day: 'ден'
+                }
+            });
+            calendar.render();
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

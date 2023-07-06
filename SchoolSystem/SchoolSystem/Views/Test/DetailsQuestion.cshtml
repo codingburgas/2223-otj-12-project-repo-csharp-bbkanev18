@@ -1,0 +1,75 @@
+﻿@model SchoolSystem.DAL.DataTransferObjects.CreateQuestionTransferObject
+@{
+    ViewData["Title"] = "Detials Question Page";
+}
+
+<h1>Подробности</h1>
+
+
+<div>
+    <h4>Въпрос</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Име на въпроса:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionName)
+        </dd>
+        <dt class="col-sm-2">
+            Точки на въпроса:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Points)т.
+        </dd>
+        <dt class="col-sm-2">
+            Верен отговор:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CorrectAnswer)
+        </dd>
+        @if (Model?.Answers?.Count == 0 || Model?.Answers == null)
+        {
+            <dt class="col-sm-2">
+                Възможени отговор:
+            </dt>
+            <dd class="col-sm-10">
+                Няма въведини възможени отговори!
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-2">
+                
+            </dt>
+            <dd class="col-sm-10">
+                <hr>
+            </dd>
+            @foreach (var answers in Model.Answers)
+            {
+                <dt class="col-sm-2">
+                    Възможен отговор:
+                </dt>
+                <dd class="col-sm-10">
+                    @answers
+                </dd>
+            }
+        }
+    </dl>
+</div>
+
+<form>
+    <input type="hidden" name="questionId" value="@Model?.QuestionId" />
+    <input type="submit" formmethod="get" asp-action="EditQuestion" asp-route-id="@Model?.Test.Id" value="Редактиране" class="btn btn-success" />
+</form>
+
+<div>
+    <a class="bi bi-arrow-bar-left" asp-action="Question" asp-route-id="@Model?.Test.Id">Обратно към въпросите</a>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
